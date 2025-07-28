@@ -3,6 +3,8 @@ import connectDB from './database/mongoDB.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
+import passport from 'passport';
+import './lib/passport.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -11,8 +13,10 @@ app.use(express.json());
 app.use(cors({
     origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
 }));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes)
 

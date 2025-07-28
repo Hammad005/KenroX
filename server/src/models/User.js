@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
-import bycrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
+    googleId:{
+      type: String,
+      unique: true,
+    },
     fullname: {
       type: String,
       required: true,
@@ -32,8 +36,8 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   try {
-    const salt = await bycrypt.genSalt(10);
-    this.password = await bycrypt.hash(this.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
     next(error);
@@ -41,7 +45,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.matchPassword = async function (password) {
-  return await bycrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
 const User = mongoose.model("User", userSchema);
