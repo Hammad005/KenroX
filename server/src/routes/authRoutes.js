@@ -1,6 +1,7 @@
 import express from 'express';
-import { sendToken, signupHandler } from '../controllers/authControllers.js';
+import { loginHandler, logoutHandler, sendToken, signupHandler, updateUserHandler } from '../controllers/authControllers.js';
 import passport from 'passport';
+import { protectRoute } from '../middleware/protectRoute.js';
 
 const authRoutes = express.Router();
 
@@ -22,5 +23,10 @@ authRoutes.get(
 );
 
 authRoutes.post('/signup', signupHandler);
+authRoutes.post('/login', loginHandler);
+authRoutes.post('/logout', logoutHandler);
 
+authRoutes.put('/update', protectRoute, updateUserHandler);
+
+authRoutes.get('/me', protectRoute, (req, res) => res.status(200).json(req.user));
 export default authRoutes;

@@ -12,22 +12,30 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const existingUser = await User.findOneAndUpdate(
-          { googleId: profile.id },
-          {
-            googleId: profile.id,
-            fullname: profile.displayName,
-            email: profile.emails[0].value,
-            profile: {
+        let existingUser = await User.findOne({ googleId: profile.id });
+
+        if (existingUser) {
+          // Ensure profile field is always available
+          if (existingUser.profile?.updated) {
+            // Case 1: Profile is marked as updated, don't overwrite image
+            existingUser.fullname = profile.displayName;
+            existingUser.email = profile.emails[0].value;
+          } else {
+            // Case 2: Profile not updated, update everything including image
+            existingUser.fullname = profile.displayName;
+            existingUser.email = profile.emails[0].value;
+            existingUser.profile = {
               imageId: null,
               imageUrl: profile.photos[0].value,
-            },
-          },
-          { new: true, upsert: true }
-        );
+              updated: false, 
+            };
+          }
 
-        if (existingUser) return done(null, existingUser);
+          await existingUser.save();
+          return done(null, existingUser);
+        }
 
+        // ✅ Case 3: No user exists, create new
         const newUser = await User.create({
           googleId: profile.id,
           fullname: profile.displayName,
@@ -35,6 +43,7 @@ passport.use(
           profile: {
             imageId: null,
             imageUrl: profile.photos[0].value,
+            updated: false,
           },
         });
 
