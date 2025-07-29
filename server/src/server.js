@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import passport from 'passport';
 import './lib/passport.js';
+import planRoutes from './routes/planRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes)
+app.use('/api/plan', planRoutes)
 
 app.listen(PORT, () => {
     connectDB();

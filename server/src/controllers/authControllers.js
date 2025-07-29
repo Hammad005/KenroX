@@ -12,7 +12,7 @@ export const signupHandler = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
     // Create new user
-    const newUser = new User.create({
+    const newUser = await User.create({
       fullname,
       email,
       password,
