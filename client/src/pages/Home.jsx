@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
     <Button variant={'secondary'}>Cancel</Button>
-    <Button >Done</Button>
+    <Button >KenroX</Button>
     <ModeToggle/>
     </>
   )
