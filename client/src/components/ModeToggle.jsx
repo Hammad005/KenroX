@@ -8,7 +8,7 @@ const ModeToggle = () => {
   return (
     <Button
       variant="outline"
-      className={'flex items-center justify-between gap-3 size-10 hover:w-fit overflow-x-hidden transition-all duration-600 ease-in-out'}
+      className="flex items-center justify-between gap-3 w-10 h-10 hover:w-fit overflow-x-hidden transition-all duration-[1000ms] ease-in-out"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <MoonStar className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />

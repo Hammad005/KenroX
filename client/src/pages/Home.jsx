@@ -5,8 +5,6 @@ import React from 'react'
 const Home = () => {
   return (
     <>
-    <Button variant={'secondary'}>Cancel</Button>
-    <Button >KenroX</Button>
     <ModeToggle/>
     </>
   )
