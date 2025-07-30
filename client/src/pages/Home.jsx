@@ -1,8 +1,14 @@
+import ModeToggle from '@/components/ModeToggle'
+import { Button } from '@/components/ui/button'
 import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+    <Button variant={'secondary'}>Cancel</Button>
+    <Button >Done</Button>
+    <ModeToggle/>
+    </>
   )
 }
 
