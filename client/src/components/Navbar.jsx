@@ -21,7 +21,7 @@ const Navbar = () => {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-md border-b border-border py-3 md:px-22 px-4"
+        className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur border-b border-border py-3 md:px-22 px-4"
       >
         <div className="container mx-auto flex items-center justify-between">
           <Link href="/" className="w-full">
@@ -31,35 +31,35 @@ const Navbar = () => {
           <div className="flex items-center justify-between w-full">
             <Link
               to="/"
-              className="md:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+              className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
               Home
             </Link>
             <Link
               to="/"
-              className="md:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+              className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
               Home
             </Link>
             <Link
               to="/"
-              className="md:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+              className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
               Home
             </Link>
             <Link
               to="/"
-              className="md:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+              className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
               Home
             </Link>
           </div>
           <div className="flex items-center gap-2 w-full justify-end">
             <ModeToggle />
-            <Button variant="secondary" className={"hidden md:block"}>
+            <Button variant="secondary" className={"hidden lg:block"}>
               Log In
             </Button>
-            <Button className={"hidden md:block"}>Sign Up</Button>
+            <Button className={"hidden lg:block"}>Sign Up</Button>
           </div>
         </div>
       </nav>
