@@ -6,6 +6,14 @@ import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
   const navRef = useRef();
@@ -14,7 +22,7 @@ const Navbar = () => {
     gsap.fromTo(
       navRef.current,
       { opacity: 0, y: -100 },
-      { opacity: 1, y: 0, duration: 1, ease: "power4.out",}
+      { opacity: 1, y: 0, duration: 1, ease: "power4.out" }
     );
   });
   return (
@@ -36,26 +44,87 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              to="/"
+              to="/about"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
               About
             </Link>
             <Link
-              to="/"
+              to="/how-it-works"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
-              Reviews
+              How It Works
             </Link>
             <Link
-              to="/"
+              to="/testimonials"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
-              Faqs
+              Testimonials
             </Link>
           </div>
           <div className="flex items-center gap-2 w-full justify-end">
             <ModeToggle />
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button className="lg:hidden" size="icon">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+
+              <SheetContent className="flex flex-col h-full">
+                <SheetHeader>
+                  <SheetTitle>
+                    <img src={logo} alt="KenroX Logo" className="w-32" />
+                  </SheetTitle>
+                </SheetHeader>
+
+                {/* Main Navigation Container */}
+                <div className="flex flex-col justify-between flex-1 mt-10">
+                  {/* Top Half - Navigation */}
+                  <nav className="flex flex-col items-center gap-12">
+                    <Link
+                      to="/"
+                      className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      to="/about"
+                      className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                    >
+                      About
+                    </Link>
+                    <Link
+                      to="/how-it-works"
+                      className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                    >
+                      How It Works
+                    </Link>
+                    <Link
+                      to="/testimonials"
+                      className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                    >
+                      Testimonials
+                    </Link>
+                    <div className="flex items-center justify-center gap-3">
+                    <Button variant="secondary" className="w-1/2">
+                      Log In
+                    </Button>
+                    <Button className="w-1/2">Sign Up</Button>
+                  </div>
+                  </nav>
+
+                  {/* Bottom - Auth Buttons */}
+                  {false && <div className="flex items-center justify-center gap-3 w-full pt-6 border-t">
+                    <Button variant="secondary" className="w-1/2">
+                      Log In
+                    </Button>
+                    <Button className="w-1/2">Sign Up</Button>
+                  </div>}
+                </div>
+              </SheetContent>
+            </Sheet>
+
             <Button variant="secondary" className={"hidden lg:block"}>
               Log In
             </Button>

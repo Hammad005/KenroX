@@ -5,6 +5,8 @@ import { Power } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Goals from "@/components/Goals";
+import Benefit from "@/components/Benefit";
+import Faq from "@/components/Faq";
 
 const Home = () => {
   const heroContainerRef = useRef();
@@ -21,7 +23,7 @@ const Home = () => {
       {
         scale: 1,
         opacity: 1,
-        duration: 1.5,
+        duration: 1.2,
         ease: "power4.out",
       }
     )
@@ -30,14 +32,14 @@ const Home = () => {
         { scale: 0 },
         {
           scale: 1,
-          duration: 1.5,
+          duration: 1.2,
           ease: "power4.out",
         },
         "-=0.7"
       )
       .to(heroBgRef.current, {
         filter: "blur(8px)",
-        duration: 1.5,
+        duration: 1.2,
         ease: "sine.inOut",
       })
       .fromTo(
@@ -58,7 +60,7 @@ const Home = () => {
   });
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen px-4 md:pt-20 pt-10">
+      <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
         <div className="flex flex-col items-center justify-center md:mt-20 mt-30">
           <div ref={heroContainerRef}>
             <div className="relative ">
@@ -93,7 +95,8 @@ const Home = () => {
         </div>
       </div>
       <Goals />
-      <div className="min-h-screen"></div>
+      <Benefit/>
+      <Faq/>
     </>
   );
 };

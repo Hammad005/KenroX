@@ -39,7 +39,7 @@ const Goals = () => {
   return (
     <div
       ref={textRef}
-      className="py-20 md:py-32 bg-secondary min-h-screen flex flex-col justify-center items-center dark:bg-card/50 mt-10"
+      className="py-20 md:py-32 bg-secondary/50 min-h-screen flex flex-col justify-center items-center dark:bg-card/50 mt-10"
     >
         <div className="mx-auto bg-primary p-4 rounded-md flex items-center justify-center mb-4">
         <BrainCircuit className="rotate-90 animate-pulse text-primary-foreground"/>
