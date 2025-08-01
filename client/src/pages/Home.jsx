@@ -35,25 +35,21 @@ const Home = () => {
         },
         "-=0.7"
       )
+      .to(heroBgRef.current, {
+        filter: "blur(8px)",
+        duration: 1.5,
+        ease: "sine.inOut",
+      })
       .fromTo(
         textRef.current.children,
-        { opacity: 0},
+        { opacity: 0 },
         {
           opacity: 1,
           stagger: 0.2,
           duration: 1,
           ease: "power4.out",
         },
-        "-=0.7"
-      )
-      .from(
-        heroBgRef.current,
-        {
-          rotate: 360,
-          duration: 3,
-          ease: "linear",
-          repeat: -1,
-        }
+        "-=1"
       );
   });
 
@@ -62,43 +58,43 @@ const Home = () => {
   });
   return (
     <>
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 md:pt-20 pt-10">
-      <div className="flex flex-col items-center justify-center md:mt-20 mt-30">
-        <div ref={heroContainerRef}>
-          <div className="relative ">
-            <div
-              ref={heroBgRef}
-              className="w-[20rem] h-[20rem] rounded-full bg-gradient-to-t from-primary to-primary-foreground "
-            />
-            <div className="w-[20rem] h-[25rem] absolute top-0 transform -translate-y-1/5 rounded-full overflow-hidden">
-              <img
-                src={Hero1}
-                alt="Hero"
-                className="w-auto h-auto absolute translate-x-1.5"
+      <div className="flex flex-col items-center justify-center min-h-screen px-4 md:pt-20 pt-10">
+        <div className="flex flex-col items-center justify-center md:mt-20 mt-30">
+          <div ref={heroContainerRef}>
+            <div className="relative ">
+              <div
+                ref={heroBgRef}
+                className="w-[20rem] h-[20rem] rounded-full bg-gradient-to-r from-primary to-primary-foreground"
               />
+              <div className="w-[20rem] h-[25rem] absolute top-0 transform -translate-y-1/5 rounded-full overflow-hidden">
+                <img
+                  src={Hero1}
+                  alt="Hero"
+                  className="w-auto h-auto absolute translate-x-1.5"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div ref={textRef} className="flex flex-col items-center mt-10">
-          <p className="text-xs text-center uppercase font-semibold">
-            The ultimate grind system for warriors
-          </p>
-          <div className="bg-gradient-to-r from-transparent via-primary-foreground to-transparent my-1 w-full h-px" />
-          <h3 className="md:text-xl text-xs font-sans text-center font-bold uppercase text-primary-foreground">
-            <span className="text-primary">Train Smarter with AI</span> — Get
-            Your Personalized Fitness & Diet Plan for Free.
-          </h3>
-          <Button className={"mt-5 "}>
-            <Power />
-            Get Started
-          </Button>
+          <div ref={textRef} className="flex flex-col items-center mt-10">
+            <p className="text-xs text-center uppercase font-semibold">
+              The ultimate grind system for warriors
+            </p>
+            <div className="bg-gradient-to-r from-transparent via-primary-foreground to-transparent my-1 w-full h-px" />
+            <h3 className="md:text-xl text-xs font-sans text-center font-bold uppercase text-primary-foreground">
+              <span className="text-primary">Train Smarter with AI</span> — Get
+              Your Personalized Fitness & Diet Plan for Free.
+            </h3>
+            <Button className={"mt-5 "}>
+              <Power />
+              Get Started
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
       <Goals />
       <div className="min-h-screen"></div>
-      </>
+    </>
   );
 };
 

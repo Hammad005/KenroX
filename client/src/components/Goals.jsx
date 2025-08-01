@@ -28,6 +28,7 @@ const Goals = () => {
           start: "top top",
           end: "+=400", // how long it stays pinned (adjust as needed)
           pin: true,
+          scrub: true,
         },
       }
     );
