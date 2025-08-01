@@ -39,19 +39,19 @@ const Navbar = () => {
               to="/"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
-              Home
+              About
             </Link>
             <Link
               to="/"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
-              Home
+              Reviews
             </Link>
             <Link
               to="/"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
             >
-              Home
+              Faqs
             </Link>
           </div>
           <div className="flex items-center gap-2 w-full justify-end">
