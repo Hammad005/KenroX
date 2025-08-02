@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const App = () => {
   // if (true) return <LoadingSpinner/>
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/testimonials" element={<Home />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Footer/>
     </>
   );
 };

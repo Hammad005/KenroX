@@ -48,11 +48,11 @@ const Faq = () => {
         Frequently asked questions
       </h3>
 
-      <div className="mt-10 md:w-3xl">
+      <div className="mt-10 lg:w-3xl">
         <Accordion type="multiple" collapsible>
           {questions.map((question, index) => (
             <AccordionItem key={index} value={`item-${index + 1}`} className={"py-4"}>
-              <AccordionTrigger className={'font-semibold text-primary'}>{question.question}</AccordionTrigger>
+              <AccordionTrigger className={'font-semibold dark:text-white text-primary'}>{question.question}</AccordionTrigger>
               <AccordionContent className={"font-sans text-muted-foreground"}>
                 {question.answer}
               </AccordionContent>
