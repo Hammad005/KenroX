@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Hero1 from "../assets/Hero1.png";
 import { Button } from "@/components/ui/button";
 import { Power } from "lucide-react";
@@ -9,6 +9,12 @@ import Benefit from "@/components/Benefit";
 import Faq from "@/components/Faq";
 
 const Home = () => {
+  useEffect(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, [])
   const heroContainerRef = useRef();
   const heroBgRef = useRef();
   const textRef = useRef();

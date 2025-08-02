@@ -56,7 +56,7 @@ const Footer = () => {
             </Button>
           </div>
           <div className="flex items-start lg:justify-start justify-center  md:gap-30 gap-22 md:mt-10 relative">
-            <div className="absolute left-0 lg:-translate-x-1/4 flex items-center justify-center w-full opacity-50">
+            <div className="absolute left-0 lg:-translate-x-1/4 flex items-center justify-center w-full dark:opacity-10 opacity-30">
                 <img src={X} alt="X" className="w-[13rem]"/>
             </div>
             <div className="flex flex-col gap-4 z-10">

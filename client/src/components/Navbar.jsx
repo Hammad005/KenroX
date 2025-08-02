@@ -32,7 +32,7 @@ const Navbar = () => {
         className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur border-b border-border py-3 md:px-22 px-4"
       >
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="w-full">
+          <Link to="/" className="w-full">
             <img src={logo} alt="logo" className="w-[8rem]" />
           </Link>
 
