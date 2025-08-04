@@ -9,6 +9,7 @@ import About from "./pages/About";
 import NotFound from "./components/NotFound";
 import HowItWorks from "./pages/HowItWorks";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 const App = () => {
   // if (true) return <LoadingSpinner/>
@@ -22,7 +23,7 @@ const App = () => {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/testimonials" element={<Home />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-and-conditions" element={<Home />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/login" element={<Login />} />
       </Routes>
       <Footer/>
