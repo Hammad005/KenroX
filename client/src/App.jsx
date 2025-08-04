@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import NotFound from "./components/NotFound";
+import HowItWorks from "./pages/HowItWorks";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const App = () => {
   // if (true) return <LoadingSpinner/>
@@ -17,9 +19,9 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/how-it-works" element={<Home />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/testimonials" element={<Home />} />
-        <Route path="/privacy-policy" element={<Home />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<Home />} />
         <Route path="/login" element={<Login />} />
       </Routes>

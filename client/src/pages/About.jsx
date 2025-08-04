@@ -5,7 +5,6 @@ import { Check } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import CircularText from "@/components/ui/CircularText";
 
 gsap.registerPlugin(ScrollTrigger);
 const About = () => {
@@ -106,8 +105,8 @@ const About = () => {
   }, []);
 
   useGSAP(() => {
-    animation();
     ScrollTrigger.refresh();
+    animation();
   }, []);
   return (
     <>
@@ -140,12 +139,6 @@ const About = () => {
                 className="w-full h-full object-contain object-bottom "
               />
             </div>
-            <CircularText
-              text="KenroX: Your AI Coach"
-              onHover="speedUp"
-              spinDuration={20}
-              className="custom-class"
-            />
             <div ref={para1Ref} className="w-full">
               <h3 className="text-lg font-sans mt-8">
                 <span className="italic text-primary font-bold">KenroX</span> is
