@@ -47,10 +47,15 @@ export const loginHandler = async (req, res) => {
       return res.status(400).json({ error: "Invalid Credentials" });
     }
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
+    if (!user.googleId) {
+      const isMatch = await user.matchPassword(password);
+      if (!isMatch) {
+        return res.status(400).json({ error: "Invalid Credentials" });
+      }
+    } else {
       return res.status(400).json({ error: "Invalid Credentials" });
     }
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "5d",
     });

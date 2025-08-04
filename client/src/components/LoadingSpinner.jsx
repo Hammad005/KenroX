@@ -37,7 +37,7 @@ const LoadingSpinner = () => {
       <div className="flex flex-col items-center gap-2 justify-center relative">
         <div
           ref={logoRef}
-          className="w-1/2 h-full"
+          className="md:w-1/3 w-1/2 h-full"
         >
           <img
             src={logo}
@@ -46,7 +46,7 @@ const LoadingSpinner = () => {
           />
         </div>
 
-        <Loader2 ref={loadingRef} className='animate-spin size-14 text-primary-foreground'/>
+        <Loader2 ref={loadingRef} className='animate-spin md:size-12 size-10 text-primary-foreground'/>
       </div>
     </div>
   );

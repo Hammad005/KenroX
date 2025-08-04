@@ -10,6 +10,7 @@ import HowItWorks from "./pages/HowItWorks";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import { userStore } from "./store/userStore";
+import { Toaster } from "@/components/ui/sonner"
 
 const App = () => {
   const {checkAuth, authLoading} = userStore();
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       </Routes>
       <Footer/>
+      <Toaster position="bottom-right"/>
     </>
   );
 };

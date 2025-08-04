@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 export const userStore = create((set) => ({
@@ -16,5 +17,30 @@ export const userStore = create((set) => ({
             set({ user: null, authLoading: false });
             console.error(error);
         }
-    }
+    },
+    login: async (data) => {
+        set({ loading: true });
+        try {
+            const response = await axios.post("/auth/login", data);
+            set({ user: response.data.user, loading: false });
+            toast.success("Login successful");
+            return {success: true}
+        } catch (error) {
+            set({ user: null, loading: false });
+            toast.error(error.response.data.error);
+            console.error(error);
+        }
+    },
+    logout: async () => {
+        set({ loading: true });
+        try {
+            await axios.post("/auth/logout");
+            set({ user: null, loading: false });
+            toast.success("Logout successful");
+        } catch (error) {
+            set({ user: null, loading: false });
+            toast.error(error.response.data.error);
+            console.error(error);
+        }
+    },
 }));

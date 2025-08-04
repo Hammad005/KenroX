@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import ModeToggle from "./ModeToggle";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { Loader, LogOut, Menu, Power } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import {
@@ -15,6 +15,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Login from "@/pages/sub-components/Login";
+import { userStore } from "@/store/userStore";
+import Signup from "@/pages/sub-components/Signup";
 
 const Navbar = () => {
   const navRef = useRef();
@@ -27,20 +29,24 @@ const Navbar = () => {
     );
   });
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
+  const { user, logout, loading } = userStore();
   return (
     <>
-    <Login open={open} setOpen={setOpen}/>
+      <Login open={open} setOpen={setOpen} />
+      <Signup open={openSignup} setOpen={setOpenSignup} />
+
       <nav
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur border-b border-border py-3 md:px-22 px-4"
       >
         <div className="container mx-auto flex items-center justify-between">
-          <Link to="/" className="w-full">
-            <img src={logo} alt="logo" className="w-[8rem]" />
+          <Link to="/" className="w-[12rem] object-contain">
+            <img src={logo} alt="logo" className="w-full object-cover" />
           </Link>
 
-          <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-center gap-12 w-full">
             <Link
               to="/"
               className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
@@ -65,8 +71,16 @@ const Navbar = () => {
             >
               Testimonials
             </Link>
+            {user && (
+              <Link
+                to="/profile"
+                className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+              >
+                Profile
+              </Link>
+            )}
           </div>
-          <div className="flex items-center gap-2 w-full justify-end">
+          <div className="flex items-center gap-2 w-fit justify-end">
             <ModeToggle />
             <Sheet>
               <SheetTrigger asChild>
@@ -110,29 +124,103 @@ const Navbar = () => {
                     >
                       Testimonials
                     </Link>
+                    {user && (
+                      <Link
+                        to="/profile"
+                        className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                      >
+                        Profile
+                      </Link>
+                    )}
                     <div className="flex items-center justify-center gap-3">
-                    <Button variant="secondary" className="w-1/2" onClick={() => setOpen(true)}>
-                      Log In
-                    </Button>
-                    <Button className="w-1/2">Sign Up</Button>
-                  </div>
+                      {!user && (
+                        <>
+                          <Button
+                            variant="secondary"
+                            className="w-1/2"
+                            onClick={() => setOpen(true)}
+                          >
+                            Log In
+                          </Button>
+                          <Button
+                            className="w-1/2"
+                            onClick={() => setOpenSignup(true)}
+                          >
+                            Sign Up
+                          </Button>
+                        </>
+                      )}
+                    </div>
                   </nav>
 
                   {/* Bottom - Auth Buttons */}
-                  {false && <div className="flex items-center justify-center gap-3 w-full pt-6 border-t">
-                    <Button variant="secondary" className="w-1/2">
-                      Log In
-                    </Button>
-                    <Button className="w-1/2">Sign Up</Button>
-                  </div>}
+                  {user && (
+                    <div className="flex items-center justify-between gap-3 w-full py-2 px-2 border-t">
+                      {/* Profile Button */}
+                      <div className="flex items-center gap-2">
+                        <Link
+                          to="/profile"
+                          className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground"
+                        >
+                          <img
+                            src={user?.profile?.imageUrl}
+                            alt="avatar"
+                            className="w-full object-cover"
+                          />
+                        </Link>
+                        <h3 className="font-sans text-xs">{user?.fullname}</h3>
+                      </div>
+                      <div>
+                        <Button
+                          size={"icon"}
+                          onClick={logout}
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            <LogOut />
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
 
-            <Button variant="secondary" className={"hidden lg:block"} onClick={() => setOpen(true)}>
-              Log In
-            </Button>
-            <Button className={"hidden lg:block"}>Sign Up</Button>
+            {user ? (
+              <>
+                <Button className={"hidden lg:flex items-center"}>
+                  <Power /> Get Started
+                </Button>
+                <Button
+                  variant="secondary"
+                  size={"icon"}
+                  className={"hidden lg:flex"}
+                  onClick={logout}
+                  disabled={loading}
+                >
+                  {loading ? <Loader className="animate-spin" /> : <LogOut />}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="secondary"
+                  className={"hidden lg:block"}
+                  onClick={() => setOpen(true)}
+                >
+                  Log In
+                </Button>
+                <Button
+                  className={"hidden lg:block"}
+                  onClick={() => setOpenSignup(true)}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </nav>
