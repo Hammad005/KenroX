@@ -11,13 +11,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import logo from "../../assets/logo.png";
+import logo from "../assets/logo.png";
 import { Eye, EyeOff, Loader } from "lucide-react";
-import GoogleLogo from "../../assets/googleLogo.png";
+import GoogleLogo from "../assets/googleLogo.png";
 import { userStore } from "@/store/userStore";
-import Login from "./Login";
 
-const Signup = ({ open, setOpen }) => {
+const Login = ({ open: openLogin, setOpen: setOpenLogin, switchToSignup }) => {
   const handleGoogleLogin = () => {
     window.open(`${import.meta.env.VITE_API_URL}/api/auth/google`, "_self");
   };
@@ -27,30 +26,28 @@ const Signup = ({ open, setOpen }) => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
 
-  const { login, loading } = userStore();
+
+  const {login, loading} = userStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await login(data);
     if (res?.success) {
-      setData({ email: "", password: "" });
-      setShowPassword(false);
-      setOpenLogin(false);
-      setOpen(false);
+        setData({ email: "", password: "" });
+        setShowPassword(false);
+        setOpenLogin(false);
     }
   };
 
   return (
     <>
-      <Login open={openLogin} setOpen={setOpenLogin} />
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={openLogin} onOpenChange={setOpenLogin}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader className={"gap-0"}>
             <DialogTitle className={"flex items-center"}>
               <img src={logo} alt="logo" className="w-[7rem]" />
               <p className="text-2xl font-sans pt-2 italic text-primary font-bold">
-                - Signup
+                - Login
               </p>
             </DialogTitle>
             <DialogDescription className={"text-[0.75rem] font-sans"}>
@@ -110,26 +107,23 @@ const Signup = ({ open, setOpen }) => {
               </div>
             </div>
             <p className="text-xs text-muted-foreground mt-3 font-sans text-center w-full">
-              Already have an account?{" "}
+              Don&apos;t have an account?{" "}
               <span
                 className="text-primary-foreground hover:underline cursor-pointer"
                 onClick={() => {
-                  setOpen(false);
-                  setOpenLogin(true);
+                  switchToSignup();
                 }}
               >
-                Login
+                Sign Up
               </span>
             </p>
             <DialogFooter className={"mt-5 pt-5 border-t"}>
               <DialogClose asChild>
-                <Button variant="outline" disabled={loading}>
-                  Cancel
-                </Button>
+                <Button variant="outline" disabled={loading}>Cancel</Button>
               </DialogClose>
-              <Button type="submit" disabled={loading}>
-                {loading ? <Loader className="animate-spin" /> : "Login"}
-              </Button>
+              <Button type="submit" disabled={loading}>{
+                loading ? <Loader className="animate-spin"/> : "Login"
+                }</Button>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -138,4 +132,4 @@ const Signup = ({ open, setOpen }) => {
   );
 };
 
-export default Signup;
+export default Login;

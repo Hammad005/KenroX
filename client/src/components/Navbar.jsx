@@ -9,14 +9,12 @@ import gsap from "gsap";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Login from "@/pages/sub-components/Login";
 import { userStore } from "@/store/userStore";
-import Signup from "@/pages/sub-components/Signup";
+import AuthModals from "@/pages/sub-components/AuthModals";
 
 const Navbar = () => {
   const navRef = useRef();
@@ -34,8 +32,7 @@ const Navbar = () => {
   const { user, logout, loading } = userStore();
   return (
     <>
-      <Login open={open} setOpen={setOpen} />
-      <Signup open={openSignup} setOpen={setOpenSignup} />
+      <AuthModals openLogin={open} setOpenLogin={setOpen} openSignup={openSignup} setOpenSignup={setOpenSignup}/>
 
       <nav
         ref={navRef}

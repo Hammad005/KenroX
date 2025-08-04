@@ -3,8 +3,8 @@ import { Card } from "@/components/ui/card";
 import { useGSAP } from "@gsap/react";
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import Login from "./sub-components/Login";
 import { userStore } from "@/store/userStore";
+import AuthModals from "./sub-components/AuthModals";
 
 const HowItWorks = () => {
   useEffect(() => {
@@ -83,7 +83,7 @@ const HowItWorks = () => {
     const [open, setOpen] = useState(false)
   return (
     <>
-    <Login open={open} setOpen={setOpen}/>
+    <AuthModals openLogin={open} setOpenLogin={setOpen} openSignup={false} setOpenSignup={false}/>
     <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
       <div
         ref={mainHeadingRef}

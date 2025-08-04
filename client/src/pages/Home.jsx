@@ -7,8 +7,8 @@ import gsap from "gsap";
 import Goals from "@/components/Goals";
 import Benefit from "@/components/Benefit";
 import Faq from "@/components/Faq";
-import Login from "./sub-components/Login";
 import { userStore } from "@/store/userStore";
+import AuthModals from "./sub-components/AuthModals";
 
 const Home = () => {
   useEffect(() => {
@@ -71,7 +71,7 @@ const Home = () => {
   const [open, setOpen] = useState(false)
   return (
     <>
-    <Login open={open} setOpen={setOpen}/>
+    <AuthModals openLogin={open} setOpenLogin={setOpen} openSignup={false} setOpenSignup={false}/>
       <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
         <div className="flex flex-col items-center justify-center md:mt-20 mt-30">
           <div ref={heroContainerRef}>
