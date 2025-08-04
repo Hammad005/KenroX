@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import ModeToggle from "./ModeToggle";
@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Login from "@/pages/sub-components/Login";
 
 const Navbar = () => {
   const navRef = useRef();
@@ -25,8 +26,11 @@ const Navbar = () => {
       { opacity: 1, y: 0, duration: 1, ease: "power4.out" }
     );
   });
+
+  const [open, setOpen] = useState(false)
   return (
     <>
+    <Login open={open} setOpen={setOpen}/>
       <nav
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur border-b border-border py-3 md:px-22 px-4"
@@ -107,7 +111,7 @@ const Navbar = () => {
                       Testimonials
                     </Link>
                     <div className="flex items-center justify-center gap-3">
-                    <Button variant="secondary" className="w-1/2">
+                    <Button variant="secondary" className="w-1/2" onClick={() => setOpen(true)}>
                       Log In
                     </Button>
                     <Button className="w-1/2">Sign Up</Button>
@@ -125,7 +129,7 @@ const Navbar = () => {
               </SheetContent>
             </Sheet>
 
-            <Button variant="secondary" className={"hidden lg:block"}>
+            <Button variant="secondary" className={"hidden lg:block"} onClick={() => setOpen(true)}>
               Log In
             </Button>
             <Button className={"hidden lg:block"}>Sign Up</Button>

@@ -3,7 +3,7 @@ import React from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 
-const Benefit = () => {
+const Benefit = ({user, setOpen}) => {
     const kenroxBenefits = [
   {
     title: "Personal Trainers",
@@ -69,7 +69,15 @@ const Benefit = () => {
             ))}
 
         </div>
-            <Button className={"mt-20 p-8"}>Try it yourself for free</Button>
+            <Button className={"mt-20 p-8"}
+            onClick={() => {
+              if (!user) {
+                setOpen(true);
+              } else {
+                ""
+              }
+            }}
+            >Try it yourself for free</Button>
       </div>
     </>
   );

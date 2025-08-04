@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useGSAP } from "@gsap/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import Login from "./sub-components/Login";
+import { userStore } from "@/store/userStore";
 
 const HowItWorks = () => {
   useEffect(() => {
@@ -77,7 +79,11 @@ const HowItWorks = () => {
   });
 
   useGSAP(animate, []);
+  const {user} = userStore();
+    const [open, setOpen] = useState(false)
   return (
+    <>
+    <Login open={open} setOpen={setOpen}/>
     <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
       <div
         ref={mainHeadingRef}
@@ -114,8 +120,17 @@ const HowItWorks = () => {
         </ol>
       </Card>
 
-      <Button className={"p-8 mb-10"}>Try it yourself for free</Button>
+      <Button className={"p-8 mb-10"}
+      onClick={() => {
+        if(!user){
+          setOpen(true)
+        } else {
+          ''
+        }
+      }}
+      >Try it yourself for free</Button>
     </div>
+    </>
   );
 };
 

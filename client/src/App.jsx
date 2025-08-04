@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
 import Home from "./pages/Home";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
@@ -31,7 +30,6 @@ const App = () => {
         <Route path="/testimonials" element={<Home />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer/>
     </>

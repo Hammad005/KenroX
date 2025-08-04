@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Hero1 from "../assets/Hero1.png";
 import { Button } from "@/components/ui/button";
 import { Power } from "lucide-react";
@@ -7,6 +7,8 @@ import gsap from "gsap";
 import Goals from "@/components/Goals";
 import Benefit from "@/components/Benefit";
 import Faq from "@/components/Faq";
+import Login from "./sub-components/Login";
+import { userStore } from "@/store/userStore";
 
 const Home = () => {
   useEffect(() => {
@@ -64,8 +66,12 @@ const Home = () => {
   useGSAP(() => {
     animate();
   });
+
+  const {user} = userStore();
+  const [open, setOpen] = useState(false)
   return (
     <>
+    <Login open={open} setOpen={setOpen}/>
       <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
         <div className="flex flex-col items-center justify-center md:mt-20 mt-30">
           <div ref={heroContainerRef}>
@@ -93,7 +99,13 @@ const Home = () => {
               <span className="text-primary">Train Smarter with AI</span> — Get
               Your Personalized Fitness & Diet Plan for Free.
             </h3>
-            <Button className={"mt-5 "}>
+            <Button className={"mt-5 "} onClick={() => {
+              if(!user){
+                setOpen(true)
+              } else{
+                ""
+              }
+            }}>
               <Power />
               Get Started
             </Button>
@@ -101,7 +113,7 @@ const Home = () => {
         </div>
       </div>
       <Goals />
-      <Benefit/>
+      <Benefit user={user} setOpen={setOpen}/>
       <Faq/>
     </>
   );
