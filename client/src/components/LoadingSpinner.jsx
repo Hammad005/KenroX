@@ -17,6 +17,7 @@ const LoadingSpinner = () => {
         scale: 1,
         opacity: 1,
         duration: 1.6,
+        delay: 0.5,
         ease: "elastic.out(1, 0.3)",
       }
     ).fromTo(

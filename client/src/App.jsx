@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
@@ -10,9 +10,16 @@ import NotFound from "./components/NotFound";
 import HowItWorks from "./pages/HowItWorks";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
+import { userStore } from "./store/userStore";
 
 const App = () => {
-  // if (true) return <LoadingSpinner/>
+  const {checkAuth, authLoading} = userStore();
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+  
+  if (authLoading) return <LoadingSpinner/>
   return (
     <>
       <Navbar />
