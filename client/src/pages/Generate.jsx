@@ -85,12 +85,12 @@ const Generate = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
-      <div className="relative flex items-center justify-center w-full min-h-screen mt-20">
-        <div className="absolute top-0 sm:-top-10 md:-top-12 w-full flex items-start justify-center shadow shadow-primary-foreground">
+      <div className="relative flex items-center justify-center w-full lg:min-h-screen lg:mt-20 ">
+        <div className="absolute -top-1/3 lg:translate-y-1/2 lg:block hidden">
           <img
             src={HeroWithBook}
             alt="hero"
-            className="h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] w-auto max-w-full object-contain"
+            className="h-[300px] w-auto max-w-full object-contain"
           />
         </div>
 
