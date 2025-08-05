@@ -2,6 +2,7 @@ import { Activity, BicepsFlexed, Briefcase, Dumbbell, HeartPlus, Home, Sparkles,
 import React from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Benefit = ({user, setOpen}) => {
     const kenroxBenefits = [
@@ -42,6 +43,8 @@ const Benefit = ({user, setOpen}) => {
     icon: Briefcase
   },
 ];
+
+const navigateTo = useNavigate();
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center md:px-22 px-4 py-20">
@@ -74,7 +77,7 @@ const Benefit = ({user, setOpen}) => {
               if (!user) {
                 setOpen(true);
               } else {
-                ""
+                navigateTo("/generate");
               }
             }}
             >Try it yourself for free</Button>

@@ -18,6 +18,19 @@ export const userStore = create((set) => ({
             console.error(error);
         }
     },
+    signup: async (data) => {
+        set({ loading: true });
+        try {
+            const response = await axios.post("/auth/signup", data);
+            set({ user: response.data.user, loading: false });
+            toast.success("Account created successfully");
+            return {success: true}
+        } catch (error) {
+            set({ user: null, loading: false });
+            toast.error(error.response.data.error);
+            console.error(error);
+        }
+    },
     login: async (data) => {
         set({ loading: true });
         try {

@@ -15,31 +15,43 @@ import logo from "../assets/logo.png";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import GoogleLogo from "../assets/googleLogo.png";
 import { userStore } from "@/store/userStore";
+import { toast } from "sonner";
 const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) => {
   const handleGoogleLogin = () => {
     window.open(`${import.meta.env.VITE_API_URL}/api/auth/google`, "_self");
   };
 
   const [data, setData] = useState({
+    fullname: "",
     email: "",
     password: "",
   });
+  const [confirmPassowrd, setConfirmPassowrd] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
 
-  const { login, loading } = userStore();
+  const { signup, loading } = userStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await login(data);
+    if (data.password.length < 6) {
+      return toast.error("Password must be at least 6 characters long");
+      
+    }else if (data.password !== confirmPassowrd) {
+      return toast.error("Passwords do not match");
+    }
+    const res = await signup(data);
     if (res?.success) {
-      setData({ email: "", password: "" });
+      setData({ fullname: "", email: "", password: "" });
+      setConfirmPassowrd("");
       setShowPassword(false);
+      setShowCPassword(false);
       setOpenSignup(false);
     }
   };
   return (
     <>
       <Dialog open={openSignup} onOpenChange={setOpenSignup}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-scroll">
           <DialogHeader className={"gap-0"}>
             <DialogTitle className={"flex items-center"}>
               <img src={logo} alt="logo" className="w-[7rem]" />
@@ -69,6 +81,15 @@ const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) =
           </div>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-3">
+              <Label htmlFor="email">Full Name</Label>
+              <Input
+                type="text"
+                placeholder="Enter your full name"
+                className="text-sm font-sans"
+                value={data.fullname}
+                onChange={(e) => setData({ ...data, fullname: e.target.value })}
+                required
+              />
               <Label htmlFor="email">Email</Label>
               <Input
                 type="email"
@@ -99,6 +120,30 @@ const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) =
                   <Eye
                     className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-muted-foreground"
                     onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </div>
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <div className="relative">
+                <Input
+                  type={showCPassword ? "text" : "password"}
+                  placeholder="••••••"
+                  className="text-sm font-sans pr-10"
+                  value={confirmPassowrd}
+                  onChange={(e) =>
+                    setConfirmPassowrd(e.target.value)
+                  }
+                  required
+                />
+                {showCPassword ? (
+                  <EyeOff
+                    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-muted-foreground"
+                    onClick={() => setShowCPassword(!showCPassword)}
+                  />
+                ) : (
+                  <Eye
+                    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-muted-foreground"
+                    onClick={() => setShowCPassword(!showCPassword)}
                   />
                 )}
               </div>

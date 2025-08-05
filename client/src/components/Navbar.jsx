@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import ModeToggle from "./ModeToggle";
 import { Button } from "./ui/button";
@@ -18,6 +18,7 @@ import AuthModals from "@/pages/sub-components/AuthModals";
 
 const Navbar = () => {
   const navRef = useRef();
+  const naivgateTo = useNavigate();
 
   useGSAP(() => {
     gsap.fromTo(
@@ -32,7 +33,12 @@ const Navbar = () => {
   const { user, logout, loading } = userStore();
   return (
     <>
-      <AuthModals openLogin={open} setOpenLogin={setOpen} openSignup={openSignup} setOpenSignup={setOpenSignup}/>
+      <AuthModals
+        openLogin={open}
+        setOpenLogin={setOpen}
+        openSignup={openSignup}
+        setOpenSignup={setOpenSignup}
+      />
 
       <nav
         ref={navRef}
@@ -150,20 +156,26 @@ const Navbar = () => {
                     </div>
                   </nav>
 
-                  {/* Bottom - Auth Buttons */}
+                  {/* Bottom*/}
                   {user && (
                     <div className="flex items-center justify-between gap-3 w-full py-2 px-2 border-t">
                       {/* Profile Button */}
                       <div className="flex items-center gap-2">
                         <Link
                           to="/profile"
-                          className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground"
+                          className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center"
                         >
-                          <img
-                            src={user?.profile?.imageUrl}
-                            alt="avatar"
-                            className="w-full object-cover"
-                          />
+                          {user?.profile?.imageUrl ? (
+                            <img
+                              src={user?.profile?.imageUrl}
+                              alt="avatar"
+                              className="w-full object-cover"
+                            />
+                          ) : (
+                            <p className="text-lg text-primary-foreground">
+                              {user?.fullname?.charAt(0).toUpperCase()}
+                            </p>
+                          )}
                         </Link>
                         <h3 className="font-sans text-xs">{user?.fullname}</h3>
                       </div>
@@ -188,7 +200,7 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <Button className={"hidden lg:flex items-center"}>
+                <Button className={"hidden lg:flex items-center"} onClick={() => naivgateTo("/generate")}>
                   <Power /> Get Started
                 </Button>
                 <Button

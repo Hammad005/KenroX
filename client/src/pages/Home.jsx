@@ -9,6 +9,7 @@ import Benefit from "@/components/Benefit";
 import Faq from "@/components/Faq";
 import { userStore } from "@/store/userStore";
 import AuthModals from "./sub-components/AuthModals";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   useEffect(() => {
@@ -17,6 +18,7 @@ const Home = () => {
         behavior: "smooth",
       });
     }, [])
+  const navigateTo = useNavigate();
   const heroContainerRef = useRef();
   const heroBgRef = useRef();
   const textRef = useRef();
@@ -103,7 +105,7 @@ const Home = () => {
               if(!user){
                 setOpen(true)
               } else{
-                ""
+                navigateTo("/generate")
               }
             }}>
               <Power />

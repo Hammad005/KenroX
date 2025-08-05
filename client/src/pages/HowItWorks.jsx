@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { userStore } from "@/store/userStore";
 import AuthModals from "./sub-components/AuthModals";
+import { useNavigate } from "react-router-dom";
 
 const HowItWorks = () => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const HowItWorks = () => {
       behavior: "smooth",
     });
   }, []);
+  const navigateTo = useNavigate();
   const points = [
     {
       title: "Create a free KenroX account.",
@@ -125,7 +127,7 @@ const HowItWorks = () => {
         if(!user){
           setOpen(true)
         } else {
-          ''
+          navigateTo("/generate")
         }
       }}
       >Try it yourself for free</Button>

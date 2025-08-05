@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
@@ -10,16 +10,17 @@ import HowItWorks from "./pages/HowItWorks";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import { userStore } from "./store/userStore";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+import Generate from "./pages/Generate";
 
 const App = () => {
-  const {checkAuth, authLoading} = userStore();
+  const { checkAuth, authLoading, user } = userStore();
 
   useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
-  
-  if (authLoading) return <LoadingSpinner/>
+    checkAuth();
+  }, [checkAuth]);
+
+  if (authLoading) return <LoadingSpinner />;
   return (
     <>
       <Navbar />
@@ -28,12 +29,16 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/testimonials" element={<Home />} />
+        {/* <Route path="/testimonials" element={<Home />} /> */}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route
+          path="/generate"
+          element={user ? <Generate /> : <Navigate to="/" />}
+        />
       </Routes>
-      <Footer/>
-      <Toaster position="bottom-right"/>
+      <Footer />
+      <Toaster position="bottom-right" />
     </>
   );
 };
