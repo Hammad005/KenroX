@@ -11,9 +11,20 @@ export const planStore = create((set) => ({
         await new Promise((resolve) => setTimeout(resolve, 22000));
         try {
             const response = await axios.post("/plan/generate", data);
-            set({ plans: response.data, planLoading: false });
+            set({ plans: response.data?.plan, planLoading: false });
             toast.success("Plan generated successfully");
             return { success: true }
+        } catch (error) {
+            set({ plans: null, planLoading: false });
+            toast.error(error.response.data.error);
+            console.error(error);
+        }
+    },
+    getPlan: async () => {
+        set({ planLoading: true });
+        try {
+            const response = await axios.get("/plan/getPlan");
+            set({ plans: response.data?.plans, planLoading: false });
         } catch (error) {
             set({ plans: null, planLoading: false });
             toast.error(error.response.data.error);

@@ -8,7 +8,7 @@ planRoutes.use(protectRoute);
 
 planRoutes.post('/generate', generatePlanHandler);
 
-planRoutes.get('/getPlan', getPlanHandler);;
+planRoutes.get('/getPlan', getPlanHandler);
 
 planRoutes.delete('/deletePlan/:id', deletePlanHandler);
 

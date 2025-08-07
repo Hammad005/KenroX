@@ -12,13 +12,22 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import { userStore } from "./store/userStore";
 import { Toaster } from "@/components/ui/sonner";
 import Generate from "./pages/Generate";
+import Testimonials from "./pages/Testimonials";
+import { planStore } from "./store/planStore";
 
 const App = () => {
   const { checkAuth, authLoading, user } = userStore();
+  const {getPlan} = planStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    if (user) {
+      getPlan(); 
+    }
+  }, [user, getPlan]);
 
   if (authLoading) return <LoadingSpinner />;
   return (
@@ -29,7 +38,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
-        {/* <Route path="/testimonials" element={<Home />} /> */}
+        <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route

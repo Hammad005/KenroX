@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Hero3 from "../assets/Hero3.png";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 
 const GeneratePlanLoading = () => {
   const pathRef = useRef(null);

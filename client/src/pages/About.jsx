@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import HeroGroup from "../assets/HeroGroup.png";
+import Hero from "../assets/Hero5.png";
 import HeroDumbble from "../assets/Hero4.png";
 import { Check } from "lucide-react";
 import { useGSAP } from "@gsap/react";
@@ -13,6 +13,13 @@ const About = () => {
       top: 0,
       behavior: "smooth",
     });
+
+    const img = new Image();
+    img.src = Hero; // or HeroDumbble
+
+    img.onload = () => {
+      ScrollTrigger.refresh();
+    };
   }, []);
   const mainHeadingRef = useRef();
 
@@ -99,8 +106,7 @@ const About = () => {
             end: "bottom 80%",
             scrub: true,
           },
-        },
-        "-=0.7"
+        }
       );
   }, []);
 
@@ -238,7 +244,7 @@ const About = () => {
             className="lg:w-[50rem] h-auto rounded-xl bg-gradient-to-r overflow-hidden from-primary to-primary-foreground"
           >
             <img
-              src={HeroGroup}
+              src={Hero}
               alt="HeroDumbble"
               className="w-full h-full object-contain object-bottom "
             />

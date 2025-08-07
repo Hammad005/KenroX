@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import  ScrollTrigger  from "gsap/ScrollTrigger";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { BrainCircuit } from "lucide-react";
+import HeroGroup from "../assets/HeroGroup.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,17 +40,26 @@ const Goals = () => {
   return (
     <div
       ref={textRef}
-      className="py-20 md:py-32 bg-secondary/50 min-h-screen flex flex-col justify-center items-center dark:bg-card/50 mt-10"
+      className="relative py-20 md:py-32 bg-secondary/50 min-h-screen flex flex-col justify-center items-center dark:bg-card/50 mt-10"
     >
-        <div className="mx-auto bg-primary p-4 rounded-md flex items-center justify-center mb-4">
-        <BrainCircuit className="rotate-90 animate-pulse text-primary-foreground"/>
-        </div>
+      <div className="mx-auto bg-primary p-4 rounded-md flex items-center justify-center mb-4">
+        <BrainCircuit className="rotate-90 animate-pulse text-primary-foreground" />
+      </div>
+
+      <div className="absolute h-[200px] w-auto object-contain bottom-0">
+        <img
+          src={HeroGroup}
+          alt="HeroGroup"
+          className="w-full h-full object-cover"
+        />
+      </div>
       <h3 className="md:text-3xl text-xl font-bold text-primary-foreground font-sans uppercase text-center">
         Achieve Your Goals Smarter
       </h3>
       <h4 className="text-center text-primary text-xs md:text-sm">
         Unlock AI-Powered Fitness & Nutrition in Seconds
       </h4>
+
       <p className="md:w-2/4 mx-auto text-center font-sans text-sm mt-4">
         Say goodbye to generic plans. Our intelligent system instantly crafts
         personalized workout and diet programs based on your body, goals, and
