@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import GeneratePlanLoading from "@/components/GeneratePlanLoading";
+import { useNavigate } from "react-router-dom";
+import { planStore } from "@/store/planStore";
 
 const Generate = () => {
   useEffect(() => {
@@ -28,30 +30,10 @@ const Generate = () => {
   }, []);
   const cardRef = useRef();
   const animationEndRef = useRef();
+  const navigateTo = useNavigate();
   const [switchToGenerate, setSwitchToGenerate] = useState(false);
-  // Intro animation
-useGSAP(() => {
-  if (!cardRef.current) return;
-  gsap.fromTo(
-    cardRef.current,
-    { opacity: 0, scale: 0 },
-    { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out" }
-  );
-}, []);
 
-// Outro animation stored in ref (for manual trigger)
-useGSAP(() => {
-  if (!cardRef.current) return;
-  const tl = gsap.timeline({ paused: true });
-  tl.to(cardRef.current, {
-    opacity: 0,
-    scale: 0,
-    duration: 1,
-    ease: "power4.out",
-    onComplete: () => setSwitchToGenerate(true),
-  });
-  animationEndRef.current = tl;
-}, []);
+  const { generatePlan } = planStore();
 
   const questions = [
     { id: "age", question: "What is your age?" },
@@ -126,6 +108,30 @@ useGSAP(() => {
     }
   };
 
+  // Intro animation
+  useGSAP(() => {
+    if (!cardRef.current) return;
+    gsap.fromTo(
+      cardRef.current,
+      { opacity: 0, scale: 0 },
+      { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out" }
+    );
+  }, []);
+
+  // Outro animation stored in ref (for manual trigger)
+  useGSAP(() => {
+    if (!cardRef.current) return;
+    const tl = gsap.timeline({ paused: true });
+    tl.to(cardRef.current, {
+      opacity: 0,
+      scale: 0,
+      duration: 1,
+      ease: "power4.out",
+      onComplete: () => setSwitchToGenerate(true),
+    });
+    animationEndRef.current = tl;
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -133,7 +139,8 @@ useGSAP(() => {
       !data.height ||
       !data.weight ||
       !data.injuries ||
-      !Array.isArray(data.workout_days) || data.workout_days.length === 0 ||
+      !Array.isArray(data.workout_days) ||
+      data.workout_days.length === 0 ||
       !data.fitness_goal ||
       !data.fitness_level
     ) {
@@ -154,13 +161,29 @@ useGSAP(() => {
     setData(updatedData);
 
     animationEndRef?.current?.play();
+
+    const res = await generatePlan(updatedData);
+    if (res?.success) {
+      setData({
+        age: null,
+        height: "",
+        weight: "",
+        injuries: "",
+        workout_days: [],
+        fitness_goal: "",
+        fitness_level: "",
+      });
+      navigateTo("/profile");
+      setSwitchToGenerate(false);
+      setCurrentStep([questions[0].id]);
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen md:px-22 px-4 md:pt-20 pt-10">
       <div className="flex items-center justify-center w-full">
-        {true ? (
-          <GeneratePlanLoading/>
+        {switchToGenerate ? (
+          <GeneratePlanLoading />
         ) : (
           <Card
             ref={cardRef}

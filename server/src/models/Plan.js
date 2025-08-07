@@ -24,10 +24,10 @@ const planSchema = new mongoose.Schema(
                 type: String,
                 required: true,
             },
-            workout_days: {
+            workout_days: [{
                 type: String,
                 required: true,
-            },
+            }],
             fitness_goal: {
                 type: String,
                 required: true,

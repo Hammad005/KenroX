@@ -24,9 +24,11 @@ export const generatePlanHandler = async (req, res) => {
         }
 
         const activePlans = await Plan.find({ user: req.user?._id, isActive: true });
-        for (const plan of activePlans) {
-            plan.isActive = false;
-            await plan.save();
+        if (activePlans.length > 0) {
+            for (const plan of activePlans) {
+                plan.isActive = false;
+                await plan.save();
+            }   
         }
 
 

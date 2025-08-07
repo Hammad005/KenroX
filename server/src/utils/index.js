@@ -25,10 +25,10 @@ export const planPrompt = (
   "{\n" +
   '    "name": "Plan Name Inspired by Fitness Goal",\n' +
   '  "workoutPlan": {\n' +
-  '    "schedule": ["Monday", "Wednesday", "Friday"],\n' +
+  '    "schedule": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] \n' + "The `schedule` array must only include the actual day names provided by the user in their available workout days." +
   '    "exercises": [\n' +
   "      {\n" +
-  '        "day": "Monday",\n' +
+  '        "day": "Monday",\n' + "Must only include the actual day names provided by the user in their available workout days." +
   '        "routines": [\n' +
   "          {\n" +
   '            "name": "Exercise Name",\n' +
