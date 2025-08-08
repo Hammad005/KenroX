@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useGSAP } from "@gsap/react";
@@ -7,6 +7,12 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 const Testimonials = () => {
+  useEffect(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, []);
     const testimonials = [
   {
     name: "Ayesha Khan",

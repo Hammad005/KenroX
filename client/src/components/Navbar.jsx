@@ -160,11 +160,9 @@ const Navbar = () => {
                   {user && (
                     <div className="flex items-center justify-between gap-3 w-full py-2 px-2 border-t">
                       {/* Profile Button */}
-                      <div className="flex items-center gap-2">
-                        <Link
-                          to="/profile"
-                          className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center"
-                        >
+                      <Link to="/profile" className="flex items-center gap-2">
+                      <div className="relative">
+                        <div className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center">
                           {user?.profile?.imageUrl ? (
                             <img
                               src={user?.profile?.imageUrl}
@@ -176,9 +174,13 @@ const Navbar = () => {
                               {user?.fullname?.charAt(0).toUpperCase()}
                             </p>
                           )}
-                        </Link>
-                        <h3 className="font-sans text-xs">{user?.fullname}</h3>
+                        </div>
+                          <div className="absolute bottom-0 right-0  size-2.5 bg-green-500 border border-white rounded-full" />
                       </div>
+                          <h3 className="font-sans text-xs">
+                            {user?.fullname}
+                          </h3>
+                      </Link>
                       <div>
                         <Button
                           size={"icon"}
@@ -200,7 +202,10 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <Button className={"hidden lg:flex items-center"} onClick={() => naivgateTo("/generate")}>
+                <Button
+                  className={"hidden lg:flex items-center"}
+                  onClick={() => naivgateTo("/generate")}
+                >
                   <Power /> Get Started
                 </Button>
                 <Button

@@ -11,7 +11,7 @@ export const planStore = create((set) => ({
         await new Promise((resolve) => setTimeout(resolve, 22000));
         try {
             const response = await axios.post("/plan/generate", data);
-            set({ plans: response.data?.plan, planLoading: false });
+            set({ plans: response.data?.plans, planLoading: false });
             toast.success("Plan generated successfully");
             return { success: true }
         } catch (error) {

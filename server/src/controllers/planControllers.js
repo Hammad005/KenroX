@@ -55,7 +55,8 @@ export const generatePlanHandler = async (req, res) => {
             },
         });
 
-        return res.status(200).json({ plan });
+         const plans = await Plan.find({ user: req.user?._id }).sort({ createdAt: -1 });
+        return res.status(200).json({ plans });
     } catch (error) {
         console.error("Error in generatePlanHandler:", error);
         return res.status(500).json({ error: error.message || "Internal Server Error" });
@@ -65,7 +66,7 @@ export const generatePlanHandler = async (req, res) => {
 
 export const getPlanHandler = async (req, res) => {
     try {
-        const plans = await Plan.find({ user: req.user?._id });
+        const plans = await Plan.find({ user: req.user?._id }).sort({ createdAt: -1 });
         return res.status(200).json({ plans });      
     } catch (error) {
         console.error("Error in getPlanHandler:", error);
