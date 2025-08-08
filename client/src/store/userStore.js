@@ -56,4 +56,17 @@ export const userStore = create((set) => ({
             console.error(error);
         }
     },
+    updateUser: async (data) => {
+        set({ loading: true });
+        try {
+            const response = await axios.put("/auth/update", data);
+            set({ user: response.data.user, loading: false });
+            toast.success("Profile updated successfully");
+            return {success: true}
+        } catch (error) {
+            set({ user: null, loading: false });
+            toast.error(error.response.data.error);
+            console.error(error);
+        }
+    },
 }));

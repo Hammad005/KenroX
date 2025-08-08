@@ -18,11 +18,9 @@ passport.use(
           // Ensure profile field is always available
           if (existingUser.profile?.updated) {
             // Case 1: Profile is marked as updated, don't overwrite image
-            existingUser.fullname = profile.displayName;
             existingUser.email = profile.emails[0].value;
           } else {
             // Case 2: Profile not updated, update everything including image
-            existingUser.fullname = profile.displayName;
             existingUser.email = profile.emails[0].value;
             existingUser.profile = {
               imageId: null,

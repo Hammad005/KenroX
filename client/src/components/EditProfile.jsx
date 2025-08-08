@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload, X } from "lucide-react";
+import { Loader2, Upload, X } from "lucide-react";
 
 const EditProfile = ({ open, setOpen }) => {
-  const { user } = userStore();
+  const { user, updateUser, loading } = userStore();
   const uploadBtnRef = useRef();
 
   const [data, setData] = useState({
@@ -32,11 +32,20 @@ const EditProfile = ({ open, setOpen }) => {
     };
     reader.readAsDataURL(file);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await updateUser(data);
+    if (res?.success) {
+      setData({ fullname: user?.fullname, profile: "" });
+      setOpen(false);
+    }
+  };
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[425px]">
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <DialogHeader>
               <DialogTitle className={"font-sans"}>Edit profile</DialogTitle>
               <DialogDescription className={"text-[0.7rem]"}>
@@ -86,9 +95,11 @@ const EditProfile = ({ open, setOpen }) => {
             </div>
             <DialogFooter className="mt-4 pt-4 border-t">
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" disabled={loading}>Cancel</Button>
               </DialogClose>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit" disabled={loading}>{
+                loading ? <Loader2 className="animate-spin" /> : "Save changes"
+                }</Button>
             </DialogFooter>
           </form>
         </DialogContent>
