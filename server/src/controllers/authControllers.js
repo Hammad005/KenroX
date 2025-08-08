@@ -89,16 +89,9 @@ export const logoutHandler = (req, res) => {
 };
 
 export const updateUserHandler = async (req, res) => {
-  const { fullname, email, profile } = req.body;
+  const { fullname, profile } = req.body;
 
   try {
-    // Check for duplicate email
-    if (email !== req.user.email) {
-      const emailExist = await User.findOne({ email });
-      if (emailExist) {
-        return res.status(400).json({ error: "Email already in use" });
-      }
-    }
 
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -125,7 +118,6 @@ export const updateUserHandler = async (req, res) => {
         req.user._id,
         {
           fullname,
-          email,
           profile: {
             imageId: cloudinaryResponse.public_id,
             imageUrl: cloudinaryResponse.secure_url,
@@ -138,7 +130,7 @@ export const updateUserHandler = async (req, res) => {
       // If profile is not provided, update only other fields
       updatedUser = await User.findByIdAndUpdate(
         req.user._id,
-        { fullname, email },
+        { fullname },
         { new: true }
       );
     }

@@ -14,6 +14,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Generate from "./pages/Generate";
 import Testimonials from "./pages/Testimonials";
 import { planStore } from "./store/planStore";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const { checkAuth, authLoading, user } = userStore();
@@ -44,6 +45,10 @@ const App = () => {
         <Route
           path="/generate"
           element={user ? <Generate /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/profile"
+          element={user ? <Profile /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />
