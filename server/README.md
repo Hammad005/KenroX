@@ -4,25 +4,7 @@
 
 ---
 
-## 📁 Project Structure
-
-```bash
-KenroX/
-├── server/  # Node.js + Express backend
-└── client/  # Vite + React frontend
-```
-
----
-
-# 📄 Clone the Repository
-
-```bash
-git clone https://github.com/Hammad005/KenroX.git
-```
-
----
-
-# 🔧 Server Setup (/server)
+# 🔧 (API/SERVER) Setup
 
 ### 1. 📦 Install Dependencies
 
@@ -144,50 +126,6 @@ npm start
 ```
 
 #### The server should now be running at: `http://localhost:(PORT)`
-
----
-
-# 💻 Client Setup (/client)
-
-### 1. 📦 Install Dependencies
-
-```bash
-cd client
-npm install
-```
-
-### 2. ⚙️ Environment Variables
-
-##### Create a `.env` file in the `client` directory and add the following variables:
-
-```env
-VITE_API_URL=                    # Your backend API base URL (e.g., http://localhost:5000)
-```
-
-### 3. 🧪 Run Client
-
-```bash
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-#### The client will be available at: `http://localhost:5173` (default Vite port)
-
----
-
-# 🛠️ Tech Stack
-
-- **Frontend**: React, Vite, TailwindCSS, Shadcn
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
-- **APIs Used**: Gemini AI, Cloudinary
 
 ---
 

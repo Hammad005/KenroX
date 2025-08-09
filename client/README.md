@@ -1,12 +1,55 @@
-# React + Vite
+<h1 align="center">KenroX</h1>
+<p align="center">The ultimate grind system for warriors, Train Smarter with AI — Get Your Personalized Fitness & Diet Plan for Free.</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# 💻 Client Setup (/client)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. 📦 Install Dependencies
 
-## Expanding the ESLint configuration
+```bash
+cd client
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. ⚙️ Environment Variables
+
+##### Create a `.env` file in the `client` directory and add the following variables:
+
+```env
+VITE_API_URL=                    # Your backend API base URL (e.g., http://localhost:5000)
+```
+
+### 3. 🧪 Run Client
+
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+#### The client will be available at: `http://localhost:5173` (default Vite port)
+
+---
+
+# 📌 Important Notes
+
+- Ensure that `.env` files are properly configured in both the client and server folders.
+- All external APIs and services (MongoDB, Gemini, Cloudinary, Pexels) must be active and authorized.
+- The application will not function correctly without valid API credentials.
+
+---
+
+# 🙌 Acknowledgements
+
+#### Special thanks to the APIs and services that made this project possible:
+
+- [Google Gemini](https://deepmind.google/technologies/gemini/)
+- [Cloudinary](https://cloudinary.com/)
+
+#### Made with ❤️ by [Hammad Khatri](https://github.com/Hammad005)
