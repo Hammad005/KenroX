@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import passport from 'passport';
 import './lib/passport.js';
 import planRoutes from './routes/planRoutes.js';
+import "dotenv/config";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
