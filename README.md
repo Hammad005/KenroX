@@ -1,4 +1,7 @@
 <h1 align="center">KenroX</h1>
+
+![Demo App](/client/public/banner.png)
+
 <p align="center">The ultimate grind system for warriors, Train Smarter with AI — Get Your Personalized Fitness & Diet Plan for Free.</p>
 
 
