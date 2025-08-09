@@ -75,12 +75,20 @@ const Navbar = () => {
               Testimonials
             </Link>
             {user && (
+              <>
+              <Link
+                to="/generate"
+                className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+              >
+                Generate
+              </Link>
               <Link
                 to="/profile"
                 className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
               >
                 Profile
               </Link>
+              </>
             )}
           </div>
           <div className="flex items-center gap-2 w-fit justify-end">
@@ -128,12 +136,20 @@ const Navbar = () => {
                       Testimonials
                     </Link>
                     {user && (
+                      <>
+                      <Link
+                        to="/generate"
+                        className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                      >
+                        Generate
+                      </Link>
                       <Link
                         to="/profile"
                         className="uppercase text-sm font-medium hover:text-primary transition-colors"
                       >
                         Profile
                       </Link>
+                      </>
                     )}
                     <div className="flex items-center justify-center gap-3">
                       {!user && (

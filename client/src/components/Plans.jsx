@@ -27,6 +27,7 @@ import {
   Vegan,
 } from "lucide-react";
 import DeletePlan from "./DeletePlan";
+import ActivePlan from "./ActivePlan";
 
 const Plans = () => {
   const { plans } = planStore();
@@ -36,10 +37,12 @@ const Plans = () => {
   );
 
   const [open, setOpen] = useState(false);
+  const [openActive, setOpenActive] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
 
   return (
     <>
+    <ActivePlan open={openActive} setOpen={setOpenActive} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan}/>
     <DeletePlan open={open} setOpen={setOpen} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} setActive={setActive}/>
       <div className="flex flex-col items-center justify-center gap-8 w-full">
         <Card className={"w-full px-6"}>
@@ -210,7 +213,10 @@ const Plans = () => {
             )}
             <div className="flex items-center justify-center gap-2 md:justify-end w-full md:mt-0 mt-2">
               {!active?.isActive && (
-                <Button>
+                <Button onClick={() => {
+                  setSelectedPlan(active)
+                  setOpenActive(true)
+                }}>
                   <span className="w-2 h-2 bg-green-500 rounded-full" /> Active
                 </Button>
               )}

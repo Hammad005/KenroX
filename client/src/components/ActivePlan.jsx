@@ -11,23 +11,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { planStore } from "@/store/planStore";
 import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
 
-const DeletePlan = ({ open, setOpen, selectedPlan, setSelectedPlan, setActive }) => {
-    const { deletePlan, planLoading, plans } = planStore();
-    const handleDelete = async () => {
-        const res = await deletePlan(selectedPlan?._id);
+const ActivePlan = ({open, setOpen, selectedPlan, setSelectedPlan}) => {
+     const { activePlan, planLoading } = planStore();
+    const handleActive = async () => {
+        const res = await activePlan(selectedPlan?._id);
         if (res?.success) {
             setOpen(false);
             setSelectedPlan(null);
         }
     }
-    useEffect(() => {
-  if (plans.length && !plans.includes(selectedPlan)) {
-    setActive(plans[0]);
-  }
-}, [plans]);
-
+    
   return (
     <>
       <AlertDialog open={open} onOpenChange={setOpen}>
@@ -35,21 +29,21 @@ const DeletePlan = ({ open, setOpen, selectedPlan, setSelectedPlan, setActive })
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete {
+              This action cannot be undone. This will activate {
                 selectedPlan?.name
-              } from your account.
+              }.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disable={planLoading}>Cancel</AlertDialogCancel>
-            <AlertDialogAction disable={planLoading} onClick={handleDelete}>{
-                planLoading ? <Loader2 className="animate-spin"/> : "Delete"
+            <AlertDialogAction disable={planLoading} onClick={handleActive}>{
+                planLoading ? <Loader2 className="animate-spin"/> : "Activate"
                 }</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
-  );
-};
+  )
+}
 
-export default DeletePlan;
+export default ActivePlan
