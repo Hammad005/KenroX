@@ -18,7 +18,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Apple, Calendar, CalendarDays, Dumbbell } from "lucide-react";
+import {
+  Apple,
+  Calendar,
+  CalendarDays,
+  Dumbbell,
+  Trash2,
+  Vegan,
+} from "lucide-react";
+import DeletePlan from "./DeletePlan";
 
 const Plans = () => {
   const { plans } = planStore();
@@ -27,8 +35,12 @@ const Plans = () => {
     plans.filter((plan) => plan?.isActive)[0] || plans[0]
   );
 
+  const [open, setOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
   return (
     <>
+    <DeletePlan open={open} setOpen={setOpen} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} setActive={setActive}/>
       <div className="flex flex-col items-center justify-center gap-8 w-full">
         <Card className={"w-full px-6"}>
           <div className="flex items-center justify-between">
@@ -46,9 +58,8 @@ const Plans = () => {
                 variant={active?._id === plan?._id ? "default" : "outline"}
                 onClick={() => setActive(plan)}
                 className={
-                  "border border-primary-foreground px-4 whitespace-normal  font-semibold"
+                  "border border-primary-foreground px-4 whitespace-normal  font-semibold min-h-10 h-auto"
                 }
-                size={"lg"}
               >
                 {plan?.name}
                 {plan?.isActive && (
@@ -183,7 +194,7 @@ const Plans = () => {
           </Accordion>
         </Card>
         <Card className={"w-full px-6"}>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center w-full">
             <h3 className="text-lg font-bold text-primary-foreground uppercase tracking-tighter">
               <span className="text-muted-foreground">Plan:</span>{" "}
               {active?.name}
@@ -197,6 +208,19 @@ const Plans = () => {
                 Active
               </span>
             )}
+            <div className="flex items-center justify-center gap-2 md:justify-end w-full md:mt-0 mt-2">
+              {!active?.isActive && (
+                <Button>
+                  <span className="w-2 h-2 bg-green-500 rounded-full" /> Active
+                </Button>
+              )}
+              <Button variant={"secondary"} onClick={() =>{ 
+                setSelectedPlan(active)
+                setOpen(true)
+              }}>
+                <Trash2 /> Delete
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-col p-4 rounded-md bg-input gap-2 w-full">
@@ -221,13 +245,20 @@ const Plans = () => {
                     className="w-full rounded-md flex flex-col gap-4"
                   >
                     {active?.workoutPlan?.exercises.map((exercise, index) => (
-                      <AccordionItem value={`item-${index + 1}`} key={index} className={"bg-card rounded-md"}>
+                      <AccordionItem
+                        value={`item-${index + 1}`}
+                        key={index}
+                        className={"bg-card rounded-md"}
+                      >
                         <AccordionTrigger
                           className={
-                            "hover:bg-secondary text-primary-foreground font-semibold tracking-wide py-3 px-4"
+                            "hover:bg-secondary text-primary-foreground font-semibold tracking-wide py-3 px-4   w-full"
                           }
                         >
-                          {exercise.day}
+                          <p>{exercise.day}</p>
+                          <p className="text-xs text-muted-foreground flex justify-end w-full">
+                            {exercise.routines.length} Exercise
+                          </p>
                         </AccordionTrigger>
                         <AccordionContent className={"p-4 flex flex-col gap-8"}>
                           {exercise.routines.map((routine, index) => (
@@ -252,7 +283,42 @@ const Plans = () => {
                   </Accordion>
                 </div>
               </TabsContent>
-              <TabsContent value="diet">Change your password here.</TabsContent>
+              <TabsContent value="diet">
+                <div className="font-bold text-muted-foreground uppercase flex items-center justify-between mb-5 py-3 border-b border-b-muted-foreground">
+                  <p className="flex items-center gap-1">
+                    <Vegan className="size-5 text-primary-foreground" /> Daily
+                    Calories Target:
+                  </p>
+                  <p className="text-primary-foreground text-xl">
+                    {active?.dietPlan?.dailyCalories} calories
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4">
+                  {active?.dietPlan?.meals.map((meal, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-2 bg-card p-4 rounded-md"
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="flex items-center gap-2 uppercase text-primary-foreground font-semibold tracking-wide">
+                          <span className="w-3 h-3 bg-primary-foreground rounded-full" />{" "}
+                          {meal.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {meal.foods.length} Meals
+                        </p>
+                      </div>
+
+                      {meal.foods.map((food, index) => (
+                          <p key={index} className="text-sm">
+                            <span className="text-primary-foreground font-sans font-semibold">{index + 1}.</span>{" "}
+                            {food}
+                          </p>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
             </Tabs>
           </div>
         </Card>

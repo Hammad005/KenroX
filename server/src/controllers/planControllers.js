@@ -64,6 +64,31 @@ export const generatePlanHandler = async (req, res) => {
 
 };
 
+export const activePlan = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const activePlans = await Plan.find({ user: req.user?._id, isActive: true });
+        if (activePlans.length > 0) {
+            for (const plan of activePlans) {
+                plan.isActive = false;
+                await plan.save();
+            }   
+        }
+        
+        const plan = await Plan.findById(id);
+        if (!plan) {
+            return res.status(404).json({ error: "Plan not found" });
+        }
+        plan.isActive = true;
+        await plan.save();
+        const plans = await Plan.find({ user: req.user?._id }).sort({ createdAt: -1 });
+        return res.status(200).json({ plans });
+    } catch (error) {
+        console.error("Error in activePlan:", error);
+        return res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+};
+
 export const getPlanHandler = async (req, res) => {
     try {
         const plans = await Plan.find({ user: req.user?._id }).sort({ createdAt: -1 });
