@@ -12,31 +12,32 @@ import {
 import { planStore } from "@/store/planStore";
 import { Loader2 } from "lucide-react";
 
-const ActivePlan = ({open, setOpen, selectedPlan, setSelectedPlan}) => {
+const ActivePlan = ({openActive, setOpenActive, selectedPlan, setSelectedPlan}) => {
      const { activePlan, planLoading } = planStore();
     const handleActive = async () => {
-        const res = await activePlan(selectedPlan?._id);
-        if (res?.success) {
-            setOpen(false);
+        const response = await activePlan(selectedPlan?._id);
+        if (response?.success) {
+            setOpenActive(false);
             setSelectedPlan(null);
         }
     }
     
   return (
     <>
-      <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialog open={openActive}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will activate {
-                selectedPlan?.name
-              }.
+              This action cannot be undone. This will activate <span className="font-black font-sans">{selectedPlan?.name}</span>.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disable={planLoading}>Cancel</AlertDialogCancel>
-            <AlertDialogAction disable={planLoading} onClick={handleActive}>{
+            <AlertDialogCancel disabled={planLoading} onClick={() => {
+              setOpenActive(false);
+            setSelectedPlan(null);
+            }}>Cancel</AlertDialogCancel>
+            <AlertDialogAction disabled={planLoading} onClick={handleActive}>{
                 planLoading ? <Loader2 className="animate-spin"/> : "Activate"
                 }</AlertDialogAction>
           </AlertDialogFooter>

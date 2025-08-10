@@ -42,8 +42,19 @@ const Plans = () => {
 
   return (
     <>
-    <ActivePlan open={openActive} setOpen={setOpenActive} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan}/>
-    <DeletePlan open={open} setOpen={setOpen} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} setActive={setActive}/>
+      <ActivePlan
+        openActive={openActive}
+        setOpenActive={setOpenActive}
+        selectedPlan={selectedPlan}
+        setSelectedPlan={setSelectedPlan}
+      />
+      <DeletePlan
+        open={open}
+        setOpen={setOpen}
+        selectedPlan={selectedPlan}
+        setSelectedPlan={setSelectedPlan}
+        setActive={setActive}
+      />
       <div className="flex flex-col items-center justify-center gap-8 w-full">
         <Card className={"w-full px-6"}>
           <div className="flex items-center justify-between">
@@ -61,13 +72,13 @@ const Plans = () => {
                 variant={active?._id === plan?._id ? "default" : "outline"}
                 onClick={() => setActive(plan)}
                 className={
-                  "border border-primary-foreground px-4 whitespace-normal  font-semibold min-h-10 h-auto"
+                  "border border-primary-foreground px-4 whitespace-normal  font-semibold min-h-10 h-auto md:text-base text-xs"
                 }
               >
                 {plan?.name}
                 {plan?.isActive && (
-                  <div className="ml-2 flex items-center gap-1 px-2 py-0.5 text-sm text-primary-foreground bg-secondary rounded-sm">
-                    <span className="w-2 h-2 bg-green-500 rounded-full" />
+                  <div className="ml-2 flex items-center gap-1 px-2 py-0.5 md:text-sm text-xs text-primary-foreground bg-secondary rounded-sm">
+                    <span className="md:size-2 size-1.5 bg-green-500 rounded-full" />
                     Active
                   </div>
                 )}
@@ -80,7 +91,7 @@ const Plans = () => {
             className="flex flex-col p-4 rounded-md bg-input gap-2 w-full py-0"
           >
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-lg font-bold text-primary-foreground uppercase">
+              <AccordionTrigger className="md:text-lg font-bold text-primary-foreground uppercase">
                 What You Gave Us:
               </AccordionTrigger>
               <AccordionContent>
@@ -103,7 +114,7 @@ const Plans = () => {
                       </TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className={"text-xs"}>
                     <TableRow
                       className={"border border-foreground whitespace-pre-wrap"}
                     >
@@ -198,37 +209,46 @@ const Plans = () => {
         </Card>
         <Card className={"w-full px-6"}>
           <div className="flex flex-col items-center justify-center w-full">
-            <h3 className="text-lg font-bold text-primary-foreground uppercase tracking-tighter">
+            <h3 className="md:text-lg text-sm font-bold text-primary-foreground uppercase tracking-tighter">
               <span className="text-muted-foreground">Plan:</span>{" "}
               {active?.name}
             </h3>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground md:text-sm text-xs">
               {new Date(active?.createdAt).toDateString()}
             </p>
+            <p className="font-bold text-muted-foreground uppercase flex md:items-center mt-3 text-xs text-center">
+              <CalendarDays className="size-3.5 text-primary-foreground mr-1 md:flex hidden" />
+              SCHEDULE: {active?.workoutPlan?.schedule?.join(", ")}
+            </p>
             {active?.isActive && (
-              <span className="mt-2 flex items-center gap-1 px-2 py-0.5 text-sm text-primary-foreground bg-secondary rounded-sm">
-                <span className="w-2 h-2 bg-green-500 rounded-full" />
+              <span className="mt-2 flex items-center gap-1 px-2 py-0.5 md:text-sm text-xs text-primary-foreground bg-secondary rounded-sm">
+                <span className="md:size-2 size-1.5 bg-green-500 rounded-full" />
                 Active
               </span>
             )}
             <div className="flex items-center justify-center gap-2 md:justify-end w-full md:mt-0 mt-2">
               {!active?.isActive && (
-                <Button onClick={() => {
-                  setSelectedPlan(active)
-                  setOpenActive(true)
-                }}>
+                <Button
+                  onClick={() => {
+                    setSelectedPlan(active);
+                    setOpenActive(true);
+                  }}
+                  className={"px-3"}
+                >
                   <span className="w-2 h-2 bg-green-500 rounded-full" /> Active
                 </Button>
               )}
-              <Button variant={"secondary"} onClick={() =>{ 
-                setSelectedPlan(active)
-                setOpen(true)
-              }}>
+              <Button
+                variant={"secondary"}
+                onClick={() => {
+                  setSelectedPlan(active);
+                  setOpen(true);
+                }}
+              >
                 <Trash2 /> Delete
               </Button>
             </div>
           </div>
-
           <div className="flex flex-col p-4 rounded-md bg-input gap-2 w-full">
             <Tabs defaultValue="workout" className="w-full">
               <TabsList className={"w-full"}>
@@ -240,10 +260,6 @@ const Plans = () => {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="workout">
-                <p className="font-bold text-muted-foreground uppercase flex items-center gap-1 my-3">
-                  <CalendarDays className="size-5 text-primary-foreground" />{" "}
-                  SCHEDULE: {active?.workoutPlan?.schedule?.join(", ")}
-                </p>
                 <div className="flex flex-col gap-4">
                   <Accordion
                     type="single"
@@ -261,7 +277,7 @@ const Plans = () => {
                             "hover:bg-secondary text-primary-foreground font-semibold tracking-wide py-3 px-4   w-full"
                           }
                         >
-                          <p>{exercise.day}</p>
+                          <p className="text-xs">{exercise.day}</p>
                           <p className="text-xs text-muted-foreground flex justify-end w-full">
                             {exercise.routines.length} Exercise
                           </p>
@@ -270,9 +286,11 @@ const Plans = () => {
                           {exercise.routines.map((routine, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-between bg-input p-4 rounded-md"
+                              className="flex md:flex-row flex-col items-center md:justify-between justify-center bg-input p-4 rounded-md gap-2"
                             >
-                              <p>{routine.name}</p>
+                              <p className="text-sm text-center">
+                                {routine.name}
+                              </p>
                               <div className="flex gap-2">
                                 <p className="text-primary-foreground text-sm bg-primary py-1 px-4 rounded-md">
                                   {routine.sets} sets
@@ -290,12 +308,12 @@ const Plans = () => {
                 </div>
               </TabsContent>
               <TabsContent value="diet">
-                <div className="font-bold text-muted-foreground uppercase flex items-center justify-between mb-5 py-3 border-b border-b-muted-foreground">
-                  <p className="flex items-center gap-1">
+                <div className="font-bold text-muted-foreground uppercase flex md:flex-row flex-col items-center justify-between mb-5 py-3 border-b border-b-muted-foreground">
+                  <p className="flex items-center gap-1 md:text-base text-sm font-semibold">
                     <Vegan className="size-5 text-primary-foreground" /> Daily
                     Calories Target:
                   </p>
-                  <p className="text-primary-foreground text-xl">
+                  <p className="text-primary-foreground md:text-xl text-lg font-black font-sans">
                     {active?.dietPlan?.dailyCalories} calories
                   </p>
                 </div>
@@ -306,8 +324,8 @@ const Plans = () => {
                       className="flex flex-col gap-2 bg-card p-4 rounded-md"
                     >
                       <div className="flex items-center justify-between">
-                        <p className="flex items-center gap-2 uppercase text-primary-foreground font-semibold tracking-wide">
-                          <span className="w-3 h-3 bg-primary-foreground rounded-full" />{" "}
+                        <p className="flex items-center gap-2 uppercase text-primary-foreground font-semibold tracking-wide md:text-base text-xs">
+                          <span className="md:size-3 size-2 bg-primary-foreground rounded-full" />{" "}
                           {meal.name}
                         </p>
                         <p className="text-xs text-muted-foreground">
@@ -316,10 +334,15 @@ const Plans = () => {
                       </div>
 
                       {meal.foods.map((food, index) => (
-                          <p key={index} className="text-sm">
-                            <span className="text-primary-foreground font-sans font-semibold">{index + 1}.</span>{" "}
-                            {food}
-                          </p>
+                        <p
+                          key={index}
+                          className="md:text-sm text-xs border-b pb-3"
+                        >
+                          <span className="text-primary-foreground font-sans font-semibold mr-2">
+                            {index + 1}.
+                          </span>
+                          {food}
+                        </p>
                       ))}
                     </div>
                   ))}

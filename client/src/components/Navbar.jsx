@@ -15,6 +15,9 @@ import {
 } from "@/components/ui/sheet";
 import { userStore } from "@/store/userStore";
 import AuthModals from "@/pages/sub-components/AuthModals";
+import { AdvancedImage } from "@cloudinary/react";
+import cld from "@/lib/cloudinary";
+import { scale } from "@cloudinary/url-gen/actions/resize";
 
 const Navbar = () => {
   const navRef = useRef();
@@ -31,6 +34,8 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const { user, logout, loading } = userStore();
+
+  const profilePic = cld.image(user?.profile?.imageId).format("auto").quality("auto").resize(scale().width(400));
   return (
     <>
       <AuthModals
@@ -180,11 +185,7 @@ const Navbar = () => {
                       <div className="relative">
                         <div className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center">
                           {user?.profile?.imageUrl ? (
-                            <img
-                              src={user?.profile?.imageUrl}
-                              alt="avatar"
-                              className="w-full object-cover"
-                            />
+                   <AdvancedImage cldImg={profilePic} className="w-full h-full object-top object-cover"/>
                           ) : (
                             <p className="text-lg text-primary-foreground">
                               {user?.fullname?.charAt(0).toUpperCase()}
