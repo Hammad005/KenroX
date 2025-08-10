@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/table";
 import {
   Apple,
-  Calendar,
   CalendarDays,
   Dumbbell,
   Trash2,
