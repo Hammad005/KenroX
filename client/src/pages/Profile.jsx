@@ -6,12 +6,9 @@ import { planStore } from "@/store/planStore";
 import { userStore } from "@/store/userStore";
 import { useGSAP } from "@gsap/react";
 import { ArrowRightIcon, Edit, Power } from "lucide-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import { scale } from "@cloudinary/url-gen/actions/resize";
-import { AdvancedImage } from "@cloudinary/react";
-import { Cloudinary } from "@cloudinary/url-gen";
 
 const Profile = () => {
   useEffect(() => {
@@ -35,33 +32,14 @@ const Profile = () => {
       { opacity: 0, y: -40 },
       { opacity: 1, y: 0, stagger: 0.5, duration: 1.2, ease: "power2.out" }
     );
-  }, []);
+  }, [])
 
   useGSAP(animate, []);
-  const [profilePic, setProfilePic] = useState(null);
-
-  useEffect(() => {
-    if (user?.profile?.imageId) {
-      const cldInstance = new Cloudinary({
-        cloud: { cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME },
-      });
-      setProfilePic(
-        cldInstance
-          .image(user.profile.imageId)
-          .format("auto")
-          .quality("auto")
-          .resize(scale().width(400))
-      );
-    }
-  }, [user?.profile?.imageId]);
   return (
     <>
       <EditProfile open={open} setOpen={setOpen} />
       <div className="min-h-screen md:px-22 px-4 py-10 flex items-center justify-center">
-        <div
-          ref={animationRef}
-          className="min-h-screen flex flex-col items-center justify-center gap-8 mt-20 w-full"
-        >
+        <div ref={animationRef} className="min-h-screen flex flex-col items-center justify-center gap-8 mt-20 w-full">
           <Card
             className={
               "w-full md:w-1/2 flex flex-col items-center justify-center gap-1 px-6"
@@ -69,9 +47,10 @@ const Profile = () => {
           >
             <div className="relative">
               <div className="size-26 object-contain rounded-full overflow-hidden border-3 border-primary-foreground bg-primary flex items-center justify-center">
-                {profilePic ? (
-                  <AdvancedImage
-                    cldImg={profilePic}
+                {user?.profile?.imageUrl ? (
+                  <img
+                    src={user?.profile?.imageUrl}
+                    alt="avatar"
                     className="w-full h-full object-top object-cover"
                   />
                 ) : (
