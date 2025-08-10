@@ -190,6 +190,7 @@ const Navbar = () => {
                           <div className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center">
                             {user?.profile?.imageUrl ? (
                               <AdvancedImage
+                              key={user.profile.imageId}
                                 cldImg={cld
                                   .image(user.profile.imageId)
                                   .format("auto")
