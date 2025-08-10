@@ -16,8 +16,8 @@ import {
 import { userStore } from "@/store/userStore";
 import AuthModals from "@/pages/sub-components/AuthModals";
 import { AdvancedImage } from "@cloudinary/react";
-import cld from "@/lib/cloudinary";
 import { scale } from "@cloudinary/url-gen/actions/resize";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 const Navbar = () => {
   const navRef = useRef();
@@ -34,6 +34,12 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const { user, logout, loading } = userStore();
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+    },
+  });
   return (
     <>
       <AuthModals

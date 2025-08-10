@@ -9,9 +9,9 @@ import { ArrowRightIcon, Edit, Power } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import cld from "@/lib/cloudinary";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 import { AdvancedImage } from "@cloudinary/react";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 const Profile = () => {
   useEffect(() => {
@@ -38,6 +38,11 @@ const Profile = () => {
   }, []);
 
   useGSAP(animate, []);
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+    },
+  });
   return (
     <>
       <EditProfile open={open} setOpen={setOpen} />
