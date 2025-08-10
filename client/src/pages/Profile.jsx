@@ -38,20 +38,22 @@ const Profile = () => {
   }, []);
 
   useGSAP(animate, []);
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
-    },
-  });
+  const [profilePic, setProfilePic] = useState(null);
 
-  const profilePic = useMemo(() => {
-  if (!user?.profile?.imageId) return null;
-  return cld
-    .image(user.profile.imageId)
-    .format("auto")
-    .quality("auto")
-    .resize(scale().width(400));
-}, [user?.profile?.imageId]);
+  useEffect(() => {
+    if (user?.profile?.imageId) {
+      const cldInstance = new Cloudinary({
+        cloud: { cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME },
+      });
+      setProfilePic(
+        cldInstance
+          .image(user.profile.imageId)
+          .format("auto")
+          .quality("auto")
+          .resize(scale().width(400))
+      );
+    }
+  }, [user?.profile?.imageId]);
   return (
     <>
       <EditProfile open={open} setOpen={setOpen} />
@@ -67,8 +69,11 @@ const Profile = () => {
           >
             <div className="relative">
               <div className="size-26 object-contain rounded-full overflow-hidden border-3 border-primary-foreground bg-primary flex items-center justify-center">
-                {profilePic  ? (
-                  <AdvancedImage cldImg={profilePic} className="w-full h-full object-top object-cover" />
+                {profilePic ? (
+                  <AdvancedImage
+                    cldImg={profilePic}
+                    className="w-full h-full object-top object-cover"
+                  />
                 ) : (
                   <p className="text-4xl text-primary-foreground">
                     {user?.fullname?.charAt(0).toUpperCase()}

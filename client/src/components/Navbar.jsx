@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import ModeToggle from "./ModeToggle";
@@ -35,20 +35,22 @@ const Navbar = () => {
   const [openSignup, setOpenSignup] = useState(false);
   const { user, logout, loading } = userStore();
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
-    },
-  });
+  const [profilePic, setProfilePic] = useState(null);
 
-  const profilePic = useMemo(() => {
-    if (!user?.profile?.imageId) return null;
-    return cld
-      .image(user.profile.imageId)
-      .format("auto")
-      .quality("auto")
-      .resize(scale().width(400));
-  }, [user?.profile?.imageId]);
+useEffect(() => {
+  if (user?.profile?.imageId) {
+    const cldInstance = new Cloudinary({
+      cloud: { cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME },
+    });
+    setProfilePic(
+      cldInstance
+        .image(user.profile.imageId)
+        .format("auto")
+        .quality("auto")
+        .resize(scale().width(400))
+    );
+  }
+}, [user?.profile?.imageId]);
   return (
     <>
       <AuthModals
