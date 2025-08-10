@@ -35,15 +35,17 @@ const Profile = () => {
       { opacity: 0, y: -40 },
       { opacity: 1, y: 0, stagger: 0.5, duration: 1.2, ease: "power2.out" }
     );
-  }, [])
+  }, []);
 
   useGSAP(animate, []);
-  const profilePic = cld.image(user?.profile?.imageId).format("auto").quality("auto").resize(scale().width(400));
   return (
     <>
       <EditProfile open={open} setOpen={setOpen} />
       <div className="min-h-screen md:px-22 px-4 py-10 flex items-center justify-center">
-        <div ref={animationRef} className="min-h-screen flex flex-col items-center justify-center gap-8 mt-20 w-full">
+        <div
+          ref={animationRef}
+          className="min-h-screen flex flex-col items-center justify-center gap-8 mt-20 w-full"
+        >
           <Card
             className={
               "w-full md:w-1/2 flex flex-col items-center justify-center gap-1 px-6"
@@ -51,8 +53,15 @@ const Profile = () => {
           >
             <div className="relative">
               <div className="size-26 object-contain rounded-full overflow-hidden border-3 border-primary-foreground bg-primary flex items-center justify-center">
-                {user?.profile?.imageUrl ? (
-                   <AdvancedImage cldImg={profilePic} className="w-full h-full object-top object-cover"/>
+                {user?.profile?.imageId ? (
+                  <AdvancedImage
+                    cldImg={cld
+                      .image(user.profile.imageId)
+                      .format("auto")
+                      .quality("auto")
+                      .resize(scale().width(400))}
+                    className="w-full h-full object-top object-cover"
+                  />
                 ) : (
                   <p className="text-4xl text-primary-foreground">
                     {user?.fullname?.charAt(0).toUpperCase()}

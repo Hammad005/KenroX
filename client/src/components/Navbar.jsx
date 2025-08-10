@@ -34,8 +34,6 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const { user, logout, loading } = userStore();
-
-  const profilePic = cld.image(user?.profile?.imageId).format("auto").quality("auto").resize(scale().width(400));
   return (
     <>
       <AuthModals
@@ -81,18 +79,18 @@ const Navbar = () => {
             </Link>
             {user && (
               <>
-              <Link
-                to="/generate"
-                className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
-              >
-                Generate
-              </Link>
-              <Link
-                to="/profile"
-                className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
-              >
-                Profile
-              </Link>
+                <Link
+                  to="/generate"
+                  className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+                >
+                  Generate
+                </Link>
+                <Link
+                  to="/profile"
+                  className="lg:flex hidden items-center gap-1.5 uppercase text-sm hover:text-primary-foreground transition-colors"
+                >
+                  Profile
+                </Link>
               </>
             )}
           </div>
@@ -142,18 +140,18 @@ const Navbar = () => {
                     </Link>
                     {user && (
                       <>
-                      <Link
-                        to="/generate"
-                        className="uppercase text-sm font-medium hover:text-primary transition-colors"
-                      >
-                        Generate
-                      </Link>
-                      <Link
-                        to="/profile"
-                        className="uppercase text-sm font-medium hover:text-primary transition-colors"
-                      >
-                        Profile
-                      </Link>
+                        <Link
+                          to="/generate"
+                          className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          Generate
+                        </Link>
+                        <Link
+                          to="/profile"
+                          className="uppercase text-sm font-medium hover:text-primary transition-colors"
+                        >
+                          Profile
+                        </Link>
                       </>
                     )}
                     <div className="flex items-center justify-center gap-3">
@@ -182,21 +180,26 @@ const Navbar = () => {
                     <div className="flex items-center justify-between gap-3 w-full py-2 px-2 border-t">
                       {/* Profile Button */}
                       <Link to="/profile" className="flex items-center gap-2">
-                      <div className="relative">
-                        <div className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center">
-                          {user?.profile?.imageUrl ? (
-                   <AdvancedImage cldImg={profilePic} className="w-full h-full object-top object-cover"/>
-                          ) : (
-                            <p className="text-lg text-primary-foreground">
-                              {user?.fullname?.charAt(0).toUpperCase()}
-                            </p>
-                          )}
-                        </div>
+                        <div className="relative">
+                          <div className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center">
+                            {user?.profile?.imageUrl ? (
+                              <AdvancedImage
+                                cldImg={cld
+                                  .image(user.profile.imageId)
+                                  .format("auto")
+                                  .quality("auto")
+                                  .resize(scale().width(400))}
+                                className="w-full h-full object-top object-cover"
+                              />
+                            ) : (
+                              <p className="text-lg text-primary-foreground">
+                                {user?.fullname?.charAt(0).toUpperCase()}
+                              </p>
+                            )}
+                          </div>
                           <div className="absolute bottom-0 right-0  size-2.5 bg-green-500 border border-white rounded-full" />
-                      </div>
-                          <h3 className="font-sans text-xs">
-                            {user?.fullname}
-                          </h3>
+                        </div>
+                        <h3 className="font-sans text-xs">{user?.fullname}</h3>
                       </Link>
                       <div>
                         <Button
