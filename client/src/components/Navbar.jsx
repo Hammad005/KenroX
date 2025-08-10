@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import ModeToggle from "./ModeToggle";
@@ -40,6 +40,15 @@ const Navbar = () => {
       cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
     },
   });
+
+  const profilePic = useMemo(() => {
+    if (!user?.profile?.imageId) return null;
+    return cld
+      .image(user.profile.imageId)
+      .format("auto")
+      .quality("auto")
+      .resize(scale().width(400));
+  }, [user?.profile?.imageId]);
   return (
     <>
       <AuthModals
@@ -188,14 +197,9 @@ const Navbar = () => {
                       <Link to="/profile" className="flex items-center gap-2">
                         <div className="relative">
                           <div className="size-8 object-contain rounded-full overflow-hidden border-2 border-primary-foreground bg-primary flex items-center justify-center">
-                            {user?.profile?.imageUrl ? (
+                            {profilePic ? (
                               <AdvancedImage
-                              key={user.profile.imageId}
-                                cldImg={cld
-                                  .image(user.profile.imageId)
-                                  .format("auto")
-                                  .quality("auto")
-                                  .resize(scale().width(400))}
+                                cldImg={profilePic}
                                 className="w-full h-full object-top object-cover"
                               />
                             ) : (

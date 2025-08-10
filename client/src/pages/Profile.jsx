@@ -6,7 +6,7 @@ import { planStore } from "@/store/planStore";
 import { userStore } from "@/store/userStore";
 import { useGSAP } from "@gsap/react";
 import { ArrowRightIcon, Edit, Power } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { scale } from "@cloudinary/url-gen/actions/resize";
@@ -43,6 +43,15 @@ const Profile = () => {
       cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
     },
   });
+
+  const profilePic = useMemo(() => {
+  if (!user?.profile?.imageId) return null;
+  return cld
+    .image(user.profile.imageId)
+    .format("auto")
+    .quality("auto")
+    .resize(scale().width(400));
+}, [user?.profile?.imageId]);
   return (
     <>
       <EditProfile open={open} setOpen={setOpen} />
@@ -58,16 +67,8 @@ const Profile = () => {
           >
             <div className="relative">
               <div className="size-26 object-contain rounded-full overflow-hidden border-3 border-primary-foreground bg-primary flex items-center justify-center">
-                {user?.profile?.imageId ? (
-                  <AdvancedImage
-                  key={user.profile.imageId}
-                    cldImg={cld
-                      .image(user.profile.imageId)
-                      .format("auto")
-                      .quality("auto")
-                      .resize(scale().width(400))}
-                    className="w-full h-full object-top object-cover"
-                  />
+                {profilePic  ? (
+                  <AdvancedImage cldImg={profilePic} className="w-full h-full object-top object-cover" />
                 ) : (
                   <p className="text-4xl text-primary-foreground">
                     {user?.fullname?.charAt(0).toUpperCase()}
