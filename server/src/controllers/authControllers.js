@@ -49,8 +49,6 @@ export const googleAuth = async (req, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "5d",
   });
-  const userWithoutPasswrd = { ...user._doc };
-  delete userWithoutPasswrd.password;
 
   return res
     .cookie("kenroXToken", token, {
@@ -59,8 +57,7 @@ export const googleAuth = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "None" : "strict",
       secure: process.env.NODE_ENV === "production",
     })
-    .status(201)
-    .json({ user: userWithoutPasswrd });
+    .status(201);
 };
 export const signupHandler = async (req, res) => {
   const { fullname, email, password } = req.body;
