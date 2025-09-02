@@ -16,9 +16,21 @@ import { Eye, EyeOff, Loader } from "lucide-react";
 import GoogleLogo from "../assets/googleLogo.png";
 import { userStore } from "@/store/userStore";
 import { toast } from "sonner";
-const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) => {
+const Signup = ({
+  open: openSignup,
+  setOpen: setOpenSignup,
+  switchToLogin,
+}) => {
   const handleGoogleLogin = () => {
-    window.open(`${import.meta.env.VITE_API_URL}/api/auth/google`, "_self");
+    const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID; // from Google Cloud
+    const REDIRECT_URI = import.meta.env.VITE_GOOGLE_CALLBACK_URL; // your frontend redirect route
+    const SCOPE = "openid email profile";
+    const RESPONSE_TYPE = "code";
+
+    // Force account chooser every time → prompt=select_account
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}&prompt=consent%20select_account`;
+
+    window.location.href = url;
   };
 
   const [data, setData] = useState({
@@ -35,8 +47,7 @@ const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) =
     e.preventDefault();
     if (data.password.length < 6) {
       return toast.error("Password must be at least 6 characters long");
-      
-    }else if (data.password !== confirmPassowrd) {
+    } else if (data.password !== confirmPassowrd) {
       return toast.error("Passwords do not match");
     }
     const res = await signup(data);
@@ -130,9 +141,7 @@ const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) =
                   placeholder="••••••"
                   className="text-sm font-sans pr-10"
                   value={confirmPassowrd}
-                  onChange={(e) =>
-                    setConfirmPassowrd(e.target.value)
-                  }
+                  onChange={(e) => setConfirmPassowrd(e.target.value)}
                   required
                 />
                 {showCPassword ? (
@@ -153,7 +162,7 @@ const Signup = ({ open : openSignup, setOpen : setOpenSignup, switchToLogin }) =
               <span
                 className="text-primary-foreground hover:underline cursor-pointer"
                 onClick={() => {
-                  switchToLogin()
+                  switchToLogin();
                 }}
               >
                 Login

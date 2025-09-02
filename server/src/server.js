@@ -3,8 +3,6 @@ import connectDB from './database/mongoDB.js';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
-import passport from 'passport';
-import './lib/passport.js';
 import planRoutes from './routes/planRoutes.js';
 import "dotenv/config";
 
@@ -20,8 +18,6 @@ app.use(cors({
     credentials: true
 }));
 app.use(cookieParser());
-app.use(passport.initialize());
-
 app.use('/api/auth', authRoutes)
 app.use('/api/plan', planRoutes)
 

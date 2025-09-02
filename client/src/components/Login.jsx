@@ -18,7 +18,15 @@ import { userStore } from "@/store/userStore";
 
 const Login = ({ open: openLogin, setOpen: setOpenLogin, switchToSignup }) => {
   const handleGoogleLogin = () => {
-    window.open(`${import.meta.env.VITE_API_URL}/api/auth/google`, "_self");
+    const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID; // from Google Cloud
+    const REDIRECT_URI = import.meta.env.VITE_GOOGLE_CALLBACK_URL; // your frontend redirect route
+    const SCOPE = "openid email profile";
+    const RESPONSE_TYPE = "code";
+
+    // Force account chooser every time → prompt=select_account
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}&prompt=consent%20select_account`;
+
+    window.location.href = url;
   };
 
   const [data, setData] = useState({
@@ -27,15 +35,14 @@ const Login = ({ open: openLogin, setOpen: setOpenLogin, switchToSignup }) => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-
-  const {login, loading} = userStore();
+  const { login, loading } = userStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await login(data);
     if (res?.success) {
-        setData({ email: "", password: "" });
-        setShowPassword(false);
-        setOpenLogin(false);
+      setData({ email: "", password: "" });
+      setShowPassword(false);
+      setOpenLogin(false);
     }
   };
 
@@ -119,11 +126,13 @@ const Login = ({ open: openLogin, setOpen: setOpenLogin, switchToSignup }) => {
             </p>
             <DialogFooter className={"mt-5 pt-5 border-t"}>
               <DialogClose asChild>
-                <Button variant="outline" disabled={loading}>Cancel</Button>
+                <Button variant="outline" disabled={loading}>
+                  Cancel
+                </Button>
               </DialogClose>
-              <Button type="submit" disabled={loading}>{
-                loading ? <Loader className="animate-spin"/> : "Login"
-                }</Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? <Loader className="animate-spin" /> : "Login"}
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

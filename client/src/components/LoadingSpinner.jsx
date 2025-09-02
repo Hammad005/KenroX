@@ -1,12 +1,34 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import logo from '../assets/logo.png';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Loader2 } from 'lucide-react';
+import axios from '@/lib/axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoadingSpinner = () => {
+  const navigate = useNavigate();
   const logoRef = useRef();
   const loadingRef = useRef();
+
+  useEffect(() => {
+    const handleGoogleAuth = async () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+
+        if (code){
+          await axios.post("/auth/google", { code });
+          navigate("/");
+        }
+      } catch (err) {
+        console.error("Google login failed", err);
+        navigate("/");
+      }
+    };
+
+    handleGoogleAuth();
+  }, []);
 
   useGSAP(() => {
     const tl = gsap.timeline();
