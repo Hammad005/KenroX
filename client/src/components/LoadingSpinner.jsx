@@ -19,11 +19,11 @@ const LoadingSpinner = () => {
 
         if (code){
           await axios.post("/auth/google", { code });
-          navigate("/");
+          navigate("/", { replace: true });
         }
       } catch (err) {
         console.error("Google login failed", err);
-        navigate("/");
+        navigate("/", { replace: true });
       }
     };
 
